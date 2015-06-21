@@ -13,6 +13,10 @@ import java.util.List;
 public final class ColourSetterFactory {
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
+    private ColourSetterFactory() {
+
+    }
+
     static void registerFactory(SetterFactory factory) {
         FACTORIES.add(factory);
     }
