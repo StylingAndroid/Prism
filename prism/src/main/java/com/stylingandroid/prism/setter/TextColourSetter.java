@@ -1,6 +1,5 @@
 package com.stylingandroid.prism.setter;
 
-import android.view.View;
 import android.widget.TextView;
 
 import com.stylingandroid.prism.filter.ColourFilter;
