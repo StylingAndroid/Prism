@@ -8,6 +8,7 @@ import com.stylingandroid.prism.filter.ColourFilter;
 class FabColourSetter extends BaseColourSetter {
     private static final String CLASS_NAME = "android.support.design.widget.FloatingActionButton";
     private static final String METHOD_NAME = "setBackgroundTintList";
+    private static final int ALPHA_OPAQUE = 0xFF;
     private final MethodInvoker<ColorStateList> methodInvoker;
 
     public static boolean isFab(View view) {
@@ -23,7 +24,7 @@ class FabColourSetter extends BaseColourSetter {
 
     @Override
     public void onSetColour(int colour) {
-        ColorStateList colorStateList = ColorStateList.valueOf(colour).withAlpha(0xFF);
+        ColorStateList colorStateList = ColorStateList.valueOf(colour).withAlpha(ALPHA_OPAQUE);
         methodInvoker.invoke(colorStateList);
     }
 }
