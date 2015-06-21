@@ -10,7 +10,7 @@ import com.stylingandroid.prism.filter.ColourFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ColourSetterFactory {
+public final class ColourSetterFactory {
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
     static void registerFactory(SetterFactory factory) {
