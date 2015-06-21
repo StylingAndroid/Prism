@@ -1,0 +1,1 @@
+include ':prism', ':prism-viewpager', ':prism-palette', ':app'
