@@ -24,22 +24,35 @@ public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPa
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        if (colourAnimator != null && colourAnimator.isOutsideRange(position)) {
+            colourAnimator = null;
+        }
         if (colourAnimator == null) {
-            int endPosition = position == currentPosition ? position + 1 : position;
-            currentPosition = position == currentPosition ? position : position + 1;
+            int endPosition;
+            if (isScrollingRight(position)) {
+                currentPosition = position;
+                endPosition = Math.min(colourProvider.getCount() - 1, position + 1);
+            } else {
+                currentPosition = Math.min(colourProvider.getCount() - 1, position + 1);
+                endPosition = position;
+            }
             colourAnimator = createColourAnimator(currentPosition, endPosition);
         }
-        if (positionOffset == 0 && currentPosition != position) {
-            currentPosition = position;
-        }
         int newColour = colourAnimator.getColourFor(position, positionOffset);
+        if (positionOffset == 0 && currentPosition != position) {
+            colourAnimator = null;
+            newColour = colourProvider.getColour(position);
+        }
         setColour(newColour);
+    }
+
+    private boolean isScrollingRight(int position) {
+        return position == currentPosition;
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        if (state == ViewPager.SCROLL_STATE_IDLE && colourAnimator != null && colourAnimator.isAtEndPosition(currentPosition)) {
-            setColour(colourAnimator.getEndColour());
+        if (state == ViewPager.SCROLL_STATE_IDLE && colourAnimator != null) {
             colourAnimator = null;
         }
     }
