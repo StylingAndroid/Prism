@@ -47,7 +47,7 @@ android.libraryVariants.all { variant ->
                            '**/*$InjectAdapter.class',
                            '**/*$ModuleAdapter.class',
                            '**/*$ViewInjector*.class',
-                           '**/BuildConfig.class'
+                           '**/*BuildConfig*.class'
                 ]
         )
         sourceDirectories = files(variant.javaCompile.source)
