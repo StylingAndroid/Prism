@@ -13,7 +13,7 @@ class FabColourSetter extends BaseColourSetter {
 
     public static boolean isFab(View view) {
         ReflectiveCache reflectiveCache = ReflectiveCache.getInstance();
-        return view.getClass().getCanonicalName().equals(CLASS_NAME)
+        return view.getClass().getCanonicalName().startsWith(CLASS_NAME)
                 && reflectiveCache.hasMethod(view.getClass(), METHOD_NAME, ColorStateList.class);
     }
 

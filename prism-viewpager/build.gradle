@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 22
@@ -7,8 +8,6 @@ android {
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
     }
     buildTypes {
         release {
@@ -21,6 +20,18 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile project(':prism')
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'org.easytesting:fest-assert-core:2.0M10'
+}
+
+publish {
+    userOrg = 'stylingandroid'
+    groupId = 'com.stylingandroid'
+    artifactId = 'prism-viewpager'
+    version = '0.1.0'
+    dryRun = true
 }
 
 apply from: '../config/static_analysis.gradle'

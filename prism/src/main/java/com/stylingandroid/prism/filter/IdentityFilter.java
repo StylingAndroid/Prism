@@ -1,8 +1,8 @@
 package com.stylingandroid.prism.filter;
 
-public class IdentityFilter extends BaseColourFilter {
+public class IdentityFilter extends RepeatableColourFilter {
     @Override
-    public int onFilter(int colour) {
+    public Integer onFilter(Integer colour) {
         return colour;
     }
 }

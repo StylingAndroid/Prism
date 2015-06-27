@@ -176,7 +176,9 @@
 
   </module>
 
-  <module name="SuppressionFilter"></module>
+  <module name="SuppressionFilter">
+    <property name="file" value="config/checkstyle/suppressions.xml" />
+  </module>
 
   <!-- Enable suppression comments -->
   <module name="SuppressionCommentFilter">

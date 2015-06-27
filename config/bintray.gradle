@@ -1,0 +1,10 @@
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg = 'stylingandroid'
+    groupId = 'com.stylingandroid'
+    artifactId = project.ARTIFACT_ID
+    version = '0.1.0'
+    dryRun = true
+}
+

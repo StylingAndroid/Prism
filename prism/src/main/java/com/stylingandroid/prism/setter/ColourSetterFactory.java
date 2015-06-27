@@ -14,7 +14,7 @@ public final class ColourSetterFactory {
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
     private ColourSetterFactory() {
-
+        //NO-OP
     }
 
     static void registerFactory(SetterFactory factory) {
@@ -26,9 +26,6 @@ public final class ColourSetterFactory {
     }
 
     public static ColourSetter getBackgroundSetter(View view, ColourFilter filter) {
-        if (FabColourSetter.isFab(view)) {
-            return new FabColourSetter(view, filter);
-        }
         return new ViewBackgroundColourSetter(view, filter);
     }
 
@@ -43,7 +40,14 @@ public final class ColourSetterFactory {
     public static ColourSetter getColourSetter(View view, ColourFilter filter) {
         ColourSetter setter = null;
         for (SetterFactory factory : FACTORIES) {
-            setter = factory.getBackgroundSetter(view, filter);
+            setter = factory.getColourSetter(view, filter);
+        }
+        if (setter == null) {
+            if (FabColourSetter.isFab(view)) {
+                setter = new FabColourSetter(view, filter);
+            } else {
+                setter = new ViewBackgroundColourSetter(view, filter);
+            }
         }
         return setter;
     }

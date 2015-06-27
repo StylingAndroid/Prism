@@ -4,9 +4,9 @@ import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.filter.ColourFilter;
 
 public abstract class BaseColourSetter implements ColourSetter {
-    private final ColourFilter filter;
+    private final ColourFilter<Integer, Integer> filter;
 
-    protected BaseColourSetter(ColourFilter filter) {
+    protected BaseColourSetter(ColourFilter<Integer, Integer> filter) {
         this.filter = filter;
     }
 

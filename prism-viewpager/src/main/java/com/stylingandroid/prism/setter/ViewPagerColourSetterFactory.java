@@ -13,7 +13,7 @@ public class ViewPagerColourSetterFactory implements SetterFactory {
     }
 
     @Override
-    public ColourSetter getBackgroundSetter(View view, ColourFilter filter) {
+    public ColourSetter getColourSetter(View view, ColourFilter filter) {
         if (view instanceof ViewPager) {
             return ViewPagerGlowSetter.newInstance((ViewPager) view, filter);
         }
