@@ -46,7 +46,8 @@ android.libraryVariants.all { variant ->
                 excludes: ['**/R*.class',
                            '**/*$InjectAdapter.class',
                            '**/*$ModuleAdapter.class',
-                           '**/*$ViewInjector*.class'
+                           '**/*$ViewInjector*.class',
+                           '**/BuildConfig.class'
                 ]
         )
         sourceDirectories = files(variant.javaCompile.source)
