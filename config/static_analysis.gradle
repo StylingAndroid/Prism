@@ -21,7 +21,7 @@ task checkstyle(type: Checkstyle) {
     ignoreFailures = true
     configFile file("${project(':').projectDir}/config/checkstyle/checkstyle.xml")
 
-    source 'src'
+    source 'src/main'
     include '**/*.java'
     exclude '**/packageName/**', '**/utils/MyFile.java'
     classpath = files()
