@@ -94,7 +94,7 @@ public class ColourSetterFactoryTest {
     @Test
     public void givenAFabViewWhenRequestingAColourSetterThenAFabColourSetterIsReturned() {
         ColourSetter setter = ColourSetterFactory.getColourSetter(floatingActionButton, identity);
-        assertThat(setter).isInstanceOf(FabColourSetter.class);
+        assertThat(setter).isInstanceOf(Window.class);
     }
 
     @Test
