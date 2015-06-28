@@ -1,5 +1,7 @@
 package com.stylingandroid.prism.filter;
 
+import android.support.annotation.NonNull;
+
 public abstract class ChainableColourFilter<INPUT, OUTPUT> implements ColourFilter<INPUT, Integer> {
     private ChainableColourFilter<OUTPUT, Integer> nextFilter = null;
 
@@ -16,7 +18,7 @@ public abstract class ChainableColourFilter<INPUT, OUTPUT> implements ColourFilt
 
     protected abstract OUTPUT onFilter(INPUT colour);
 
-    public void setNextFilter(ChainableColourFilter<OUTPUT, Integer> nextFilter) {
+    public void setNextFilter(@NonNull ChainableColourFilter<OUTPUT, Integer> nextFilter) {
         this.nextFilter = nextFilter;
     }
 }

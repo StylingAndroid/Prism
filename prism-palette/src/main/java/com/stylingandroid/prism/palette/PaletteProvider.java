@@ -9,6 +9,8 @@ import com.stylingandroid.prism.ColourChangeTrigger;
 import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.filter.ChainableColourFilter;
 
+import java.lang.ref.WeakReference;
+
 public class PaletteProvider extends BaseColourChangeTrigger implements ColourChangeTrigger {
     private final ColourSetter colourSetter;
     private Palette palette;
@@ -22,27 +24,27 @@ public class PaletteProvider extends BaseColourChangeTrigger implements ColourCh
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getVibrantFilter() {
-        return vibrantFilter;
+        return new VibrantFilter(this);
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getLightVibrantFilter() {
-        return lightVibrantFilter;
+        return new LightVibrantFilter(this);
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getDarkVibrantFilter() {
-        return darkVibrantFilter;
+        return new DarkVibrantFilter(this);
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getMutedFilter() {
-        return mutedFilter;
+        return new MutedFilter(this);
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getLightMutedFilter() {
-        return lightMutedFilter;
+        return new LightMutedFilter(this);
     }
 
     public ChainableColourFilter<Void, Palette.Swatch> getDarkMutedFilter() {
-        return darkMutedFilter;
+        return new DarkMutedFilter(this);
     }
 
     public ChainableColourFilter<Palette.Swatch, Integer> getColour() {
@@ -64,47 +66,99 @@ public class PaletteProvider extends BaseColourChangeTrigger implements ColourCh
         }
     };
 
-    private ChainableColourFilter<Void, Palette.Swatch> vibrantFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private abstract static class BasePaletteFilter extends ChainableColourFilter<Void, Palette.Swatch> {
+        private final WeakReference<PaletteProvider> parentWeakReference;
+
+        protected BasePaletteFilter(PaletteProvider parent) {
+            this.parentWeakReference = new WeakReference<>(parent);
+            setNextFilter(parent.getColour());
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch onFilter(Void noValue) {
+            Palette palette = getPalette();
+            if (palette != null) {
+                return doFilter(palette);
+            }
+            return null;
+        }
+
+        protected abstract Palette.Swatch doFilter(Palette palette);
+
+        protected Palette getPalette() {
+            PaletteProvider paletteProvider = parentWeakReference.get();
+            if (paletteProvider != null) {
+                return paletteProvider.getPalette();
+            }
+            return null;
+        }
+    }
+
+    private static class VibrantFilter extends BasePaletteFilter {
+        VibrantFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
+        @Override
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getVibrantSwatch();
         }
-    };
+    }
 
-    private ChainableColourFilter<Void, Palette.Swatch> lightVibrantFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private static class LightVibrantFilter extends BasePaletteFilter {
+        LightVibrantFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getLightVibrantSwatch();
         }
-    };
+    }
 
-    private ChainableColourFilter<Void, Palette.Swatch> darkVibrantFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private static class DarkVibrantFilter extends BasePaletteFilter {
+        DarkVibrantFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getDarkVibrantSwatch();
         }
-    };
+    }
 
-    private ChainableColourFilter<Void, Palette.Swatch> mutedFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private static class MutedFilter extends BasePaletteFilter {
+        MutedFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getMutedSwatch();
         }
-    };
+    }
 
-    private ChainableColourFilter<Void, Palette.Swatch> lightMutedFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private static class LightMutedFilter extends BasePaletteFilter {
+        LightMutedFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getLightMutedSwatch();
         }
-    };
+    }
 
-    private ChainableColourFilter<Void, Palette.Swatch> darkMutedFilter = new ChainableColourFilter<Void, Palette.Swatch>() {
+    private static class DarkMutedFilter extends BasePaletteFilter {
+        DarkMutedFilter(PaletteProvider parent) {
+            super(parent);
+        }
+
         @Override
-        public Palette.Swatch onFilter(Void noValue) {
+        protected Palette.Swatch doFilter(Palette palette) {
             return palette.getDarkMutedSwatch();
         }
-    };
+    }
 
     private ChainableColourFilter<Palette.Swatch, Integer> rgbColour = new ChainableColourFilter<Palette.Swatch, Integer>() {
         @Override
@@ -126,6 +180,10 @@ public class PaletteProvider extends BaseColourChangeTrigger implements ColourCh
             return colour.getBodyTextColor();
         }
     };
+
+    public Palette getPalette() {
+        return palette;
+    }
 
     public void setPalette(Palette palette) {
         this.palette = palette;
