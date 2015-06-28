@@ -3,6 +3,7 @@ package com.stylingandroid.prism.viewpager;
 import android.support.v4.view.ViewPager;
 
 import com.stylingandroid.prism.BaseColourChangeTrigger;
+import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.setter.ViewPagerColourSetterFactory;
 
 public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPager.OnPageChangeListener {
@@ -24,6 +25,7 @@ public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPa
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        boolean transientChange = true;
         if (colourAnimator != null && colourAnimator.isOutsideRange(position)) {
             colourAnimator = null;
         }
@@ -42,8 +44,9 @@ public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPa
         if (positionOffset == 0 && currentPosition != position) {
             colourAnimator = null;
             newColour = colourProvider.getColour(position);
+            transientChange = false;
         }
-        setColour(newColour);
+        setColour(newColour, transientChange);
     }
 
     private boolean isScrollingRight(int position) {
@@ -53,6 +56,8 @@ public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPa
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE && colourAnimator != null) {
+            int newColour = colourProvider.getColour(currentPosition);
+            setColour(newColour, false);
             colourAnimator = null;
         }
     }
@@ -65,5 +70,15 @@ public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPa
 
     private ColourAnimator createColourAnimator(int startPosition, int endPosition) {
         return ColourAnimator.newInstance(startPosition, endPosition, colourProvider);
+    }
+
+    @Override
+    public void addColourSetter(ColourSetter colourSetter) {
+        boolean shouldInitialise = hasNoColourSetters();
+        super.addColourSetter(colourSetter);
+        if (shouldInitialise) {
+            int newColour = colourProvider.getColour(currentPosition);
+            setColour(newColour, false);
+        }
     }
 }

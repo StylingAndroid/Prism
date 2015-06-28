@@ -67,7 +67,9 @@ public final class Prism {
 
     public ColourSetter build() {
         Chameleon chameleon = new Chameleon(colourSetters);
-        colourChangeTrigger.addColourSetter(chameleon);
+        if (colourChangeTrigger != null) {
+            colourChangeTrigger.addColourSetter(chameleon);
+        }
         return chameleon;
     }
 }

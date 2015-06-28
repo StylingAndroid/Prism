@@ -2,7 +2,13 @@ package com.stylingandroid.prism.setter;
 
 import android.annotation.TargetApi;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
@@ -14,7 +20,7 @@ import com.stylingandroid.prism.filter.ColourFilter;
 public abstract class ViewPagerGlowSetter extends BaseColourSetter {
 
     private ViewPagerGlowSetter(ColourFilter filter) {
-        super(filter);
+        super(filter, false);
     }
 
     public static ViewPagerGlowSetter newInstance(ViewPager view, ColourFilter filter) {
@@ -35,23 +41,33 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
         FieldAccessor<EdgeEffect> rightEdgeEffectAccessor = new FieldAccessor<>(rightField.get(), "mEdgeEffect", EdgeEffect.class);
         EdgeEffect leftEdgeEffect = leftEdgeEffectAccessor.get();
         EdgeEffect rightEdgeEffect = rightEdgeEffectAccessor.get();
-        return new ViewPagerGlowSetterLollipop(filter, leftEdgeEffect, rightEdgeEffect);
+        return new GlowSetterLollipop(filter, leftEdgeEffect, rightEdgeEffect);
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private static ViewPagerGlowSetter newInstanceIcs(ViewPager view, ColourFilter filter) {
         Resources resources = view.getResources();
-        int glowDrawableId = resources.getIdentifier("overscroll_glow", "drawable", "android");
-        int edgeDrawableId = resources.getIdentifier("overscroll_edge", "drawable", "android");
-        return new ViewPagerGlowSetterIcs(filter, resources, glowDrawableId, edgeDrawableId);
+        int glowId = resources.getIdentifier("overscroll_glow", "drawable", "android");
+        int edgeId = resources.getIdentifier("overscroll_edge", "drawable", "android");
+        FieldAccessor<EdgeEffectCompat> leftField = new FieldAccessor<>(view, "mLeftEdge", EdgeEffectCompat.class);
+        FieldAccessor<EdgeEffectCompat> rightField = new FieldAccessor<>(view, "mRightEdge", EdgeEffectCompat.class);
+        FieldAccessor<EdgeEffect> leftEdgeEffectAccessor = new FieldAccessor<>(leftField.get(), "mEdgeEffect", EdgeEffect.class);
+        FieldAccessor<EdgeEffect> rightEdgeEffectAccessor = new FieldAccessor<>(rightField.get(), "mEdgeEffect", EdgeEffect.class);
+        FieldAccessor<Drawable> leftGlowAccessor = new FieldAccessor<>(leftEdgeEffectAccessor.get(), "mGlow", Drawable.class);
+        FieldAccessor<Drawable> leftEdgeAccessor = new FieldAccessor<>(leftEdgeEffectAccessor.get(), "mEdge", Drawable.class);
+        FieldAccessor<Drawable> rightGlowAccessor = new FieldAccessor<>(rightEdgeEffectAccessor.get(), "mGlow", Drawable.class);
+        FieldAccessor<Drawable> rightEdgeAccessor = new FieldAccessor<>(rightEdgeEffectAccessor.get(), "mEdge", Drawable.class);
+        GlowSetterIcs.Setter leftSetter = new GlowSetterIcs.Setter(resources, glowId, edgeId, leftGlowAccessor, leftEdgeAccessor);
+        GlowSetterIcs.Setter rightSetter = new GlowSetterIcs.Setter(resources, glowId, edgeId, rightGlowAccessor, rightEdgeAccessor);
+        return new GlowSetterIcs(filter, leftSetter, rightSetter);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static final class ViewPagerGlowSetterLollipop extends ViewPagerGlowSetter {
+    private static final class GlowSetterLollipop extends ViewPagerGlowSetter {
         private final EdgeEffect leftEdgeEffect;
         private final EdgeEffect rightEdgeEffect;
 
-        public ViewPagerGlowSetterLollipop(ColourFilter filter, EdgeEffect leftEdgeEffect, EdgeEffect rightEdgeEffect) {
+        public GlowSetterLollipop(ColourFilter filter, EdgeEffect leftEdgeEffect, EdgeEffect rightEdgeEffect) {
             super(filter);
             this.leftEdgeEffect = leftEdgeEffect;
             this.rightEdgeEffect = rightEdgeEffect;
@@ -65,57 +81,80 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private static final class ViewPagerGlowSetterIcs extends ViewPagerGlowSetter {
-        private final Resources resources;
-        private final int glowDrawableId;
-        private final int edgeDrawableId;
+    private static final class GlowSetterIcs extends ViewPagerGlowSetter {
+        private final Setter left;
+        private final Setter right;
 
-        private ViewPagerGlowSetterIcs(ColourFilter filter, Resources resources, int glowDrawableId, int edgeDrawableId) {
+        private GlowSetterIcs(ColourFilter filter, Setter left, Setter right) {
             super(filter);
-            this.resources = resources;
-            this.glowDrawableId = glowDrawableId;
-            this.edgeDrawableId = edgeDrawableId;
+            this.left = left;
+            this.right = right;
         }
 
         @Override
         public void onSetColour(int colour) {
-            Drawable glow = getDrawable(glowDrawableId);
-            if (glow != null) {
-                glow.setColorFilter(colour, PorterDuff.Mode.MULTIPLY);
+            left.setColour(colour);
+            right.setColour(colour);
+        }
+
+        private static final class Setter {
+            private final Resources resources;
+            private final int glowDrawableId;
+            private final int edgeDrawableId;
+            private final FieldAccessor<Drawable> glowAccessor;
+            private final FieldAccessor<Drawable> edgeAccessor;
+
+            private Setter(Resources resources, int glowId, int edgeId, FieldAccessor<Drawable> glowAccessor, FieldAccessor<Drawable> edgeAccessor) {
+                this.resources = resources;
+                this.glowDrawableId = glowId;
+                this.edgeDrawableId = edgeId;
+                this.glowAccessor = glowAccessor;
+                this.edgeAccessor = edgeAccessor;
             }
-            Drawable edge = getDrawable(edgeDrawableId);
-            if (edge != null) {
-                edge.setColorFilter(colour, PorterDuff.Mode.MULTIPLY);
+
+            public void setColour(int colour) {
+                Drawable glow = getDrawable(glowDrawableId);
+                if (glow != null && glow instanceof BitmapDrawable) {
+                    Bitmap bitmap = ((BitmapDrawable) glow).getBitmap();
+                    Bitmap coloured = colourise(bitmap, colour);
+                    glow = new BitmapDrawable(resources, coloured);
+                    glowAccessor.set(glow);
+                }
+                Drawable edge = getDrawable(edgeDrawableId);
+                if (edge != null && edge instanceof BitmapDrawable) {
+                    Bitmap bitmap = ((BitmapDrawable) edge).getBitmap();
+                    Bitmap coloured = colourise(bitmap, colour);
+                    edge = new BitmapDrawable(resources, coloured);
+                    edgeAccessor.set(edge);
+                }
+            }
+
+            @SuppressWarnings("deprecation")
+            private Drawable getDrawable(int id) {
+                return resources.getDrawable(id);
+            }
+
+            private Bitmap colourise(Bitmap bitmap, int colour) {
+                Bitmap coloured = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
+                ColorFilter cf = new PorterDuffColorFilter(colour, PorterDuff.Mode.SRC_IN);
+                Canvas canvas = new Canvas(coloured);
+                Paint paint = new Paint();
+                paint.setColorFilter(cf);
+                canvas.drawBitmap(bitmap, 0, 0, paint);
+                return coloured;
             }
         }
 
-        private Drawable getDrawable(int id) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                return getDrawableLollipop(id);
-            }
-            return getDrawableLegacy(id);
-        }
-
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        private Drawable getDrawableLollipop(int id) {
-            return resources.getDrawable(id, null);
-        }
-
-        @SuppressWarnings("deprecation")
-        private Drawable getDrawableLegacy(int id) {
-            return resources.getDrawable(id);
-        }
     }
-
     private static final class ViewPagerGlowSetterLegacy extends ViewPagerGlowSetter {
+
         private ViewPagerGlowSetterLegacy(ColourFilter filter) {
             super(filter);
         }
-
         @Override
         public void onSetColour(int colour) {
 
         }
-    }
 
+    }
 }

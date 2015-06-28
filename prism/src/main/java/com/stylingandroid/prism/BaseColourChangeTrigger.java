@@ -16,9 +16,17 @@ public class BaseColourChangeTrigger implements ColourChangeTrigger {
         colourSetters.remove(colourSetter);
     }
 
+    public boolean hasNoColourSetters() {
+        return colourSetters.isEmpty();
+    }
+
     protected void setColour(int colour) {
+       setColour(colour, false);
+    }
+
+    protected void setColour(int colour, boolean transientChange) {
         for (ColourSetter colourSetter : colourSetters) {
-            colourSetter.setColour(colour);
+            colourSetter.setColour(colour, transientChange);
         }
     }
 }

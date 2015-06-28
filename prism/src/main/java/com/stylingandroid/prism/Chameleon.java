@@ -11,8 +11,13 @@ class Chameleon implements ColourSetter {
 
     @Override
     public void setColour(int colour) {
+        setColour(colour, false);
+    }
+
+    @Override
+    public void setColour(int colour, boolean transientChange) {
         for (ColourSetter colourSetter : colourSetters) {
-            colourSetter.setColour(colour);
+            colourSetter.setColour(colour, transientChange);
         }
     }
 }
