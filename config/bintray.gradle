@@ -28,7 +28,7 @@ if (localProperties.exists()) {
     properties.load(localProperties.newDataInputStream())
 } else {
     properties.put("bintray.user", project.bintrayUser)
-    properties.put("bintray.apikey", project.bintrayAkikey)
+    properties.put("bintray.apikey", project.bintrayApikey)
 }
 
 bintray {

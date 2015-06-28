@@ -23,9 +23,7 @@ allprojects {
 
 def isDryRun() {
     if (project.hasProperty('dryrun')) {
-        println "Has property: ${dryrun}"
         return project.dryrun.toBoolean()
     }
-    println 'Default dryrun'
     return true
 }
