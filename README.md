@@ -1,7 +1,7 @@
 ###Prism
 #A dynamic UI colouring library
 
-![Build Status](https://ci.stylingandroid.com/jenkins/buildStatus/icon?job=Prism)
+![Build Status](https://ci.stylingandroid.com/jenkins/buildStatus/icon?job=Prism "Build Status")
 
 
 #Prism
