@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 22
@@ -29,13 +28,13 @@ dependencies {
     testCompile project(':test-lib')
 }
 
-//publish {
-//    userOrg = 'stylingandroid'
-//    groupId = 'com.stylingandroid'
-//    artifactId = 'prism-palette'
-//    version = '0.1.0'
-//    dryRun = true
-//}
-//
+ext {
+    libraryName = 'prism-palette'
+    libraryDescription = 'A trigger for Prism to change colours based on the Palette colours from an image'
+    libraryVersion = project.libraryVersion
+    bintrayDryRun = isDryRun()
+}
+
+apply from: '../config/bintray.gradle'
 apply from: '../config/jacoco.gradle'
 apply from: '../config/static_analysis.gradle'

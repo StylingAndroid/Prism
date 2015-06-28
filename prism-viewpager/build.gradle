@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 22
@@ -26,12 +25,13 @@ dependencies {
     testCompile 'org.easytesting:fest-assert-core:2.0M10'
 }
 
-publish {
-    userOrg = 'stylingandroid'
-    groupId = 'com.stylingandroid'
-    artifactId = 'prism-viewpager'
-    version = '0.1.0'
-    dryRun = true
+ext {
+    libraryName = 'prism-viewpager'
+    libraryDescription = 'A trigger for Prism to change colours based on a ViewPager'
+    libraryVersion = project.libraryVersion
+    bintrayDryRun = isDryRun()
 }
 
+apply from: '../config/bintray.gradle'
+apply from: '../config/jacoco.gradle'
 apply from: '../config/static_analysis.gradle'

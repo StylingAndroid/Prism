@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 22
@@ -33,13 +32,13 @@ dependencies {
     testCompile project(':test-lib')
 }
 
-publish {
-    userOrg = 'stylingandroid'
-    groupId = 'com.stylingandroid'
-    artifactId = 'prism'
-    version = '0.1.0'
-    dryRun = true
+ext {
+    libraryName = 'prism'
+    libraryDescription = 'A dynamic UI colouring library'
+    libraryVersion = project.libraryVersion
+    bintrayDryRun = isDryRun()
 }
 
+apply from: '../config/bintray.gradle'
 apply from: '../config/jacoco.gradle'
 apply from: '../config/static_analysis.gradle'

@@ -1,0 +1,42 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = 'com.stylingandroid.prism'
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                groupId 'com.stylingandroid.prism'
+                artifactId libraryName
+                version libraryVersion
+
+                // Add your description here
+                name libraryName
+                description libraryDescription
+                url 'https://github.com/StylingAndroid/Prism'
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'Styling Android'
+                        name 'Mark Allison'
+                        email 'mark@stylingandroid.com'
+                    }
+                }
+                scm {
+                    connection 'https://github.com/StylingAndroid/Prism.git'
+                    developerConnection 'https://github.com/StylingAndroid/Prism.git'
+                    url 'https://github.com/StylingAndroid/Prism'
+
+                }
+            }
+        }
+    }
+}

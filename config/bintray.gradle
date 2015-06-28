@@ -1,10 +1,46 @@
-apply plugin: 'com.novoda.bintray-release'
+apply from: '../config/maven.gradle'
+apply plugin: 'com.jfrog.bintray'
 
-publish {
-    userOrg = 'stylingandroid'
-    groupId = 'com.stylingandroid'
-    artifactId = project.ARTIFACT_ID
-    version = '0.1.0'
-    dryRun = true
+version = libraryVersion
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
 
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    dryRun = bintrayDryRun
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = libraryName
+        desc = libraryDescription
+        websiteUrl = 'https://github.com/StylingAndroid/Prism'
+        vcsUrl = 'https://github.com/StylingAndroid/Prism.git'
+        licenses = ["Apache-2.0"]
+        version {
+            name = libraryVersion
+            desc = libraryDescription
+         }
+    }
+}
