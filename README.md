@@ -21,7 +21,7 @@ extremely lightweight.
 It can be included in your project by adding the following dependency:
 
     dependencies {
-        compile 'com.stylingandroid:prism:0.1.0'
+        compile 'com.stylingandroid:prism:0.9.0'
     }
 
 Prism is divided in to three object types: _Setters_, _Filters_ and _Triggers_. Each of these individually is really quite simple, but it is combining
@@ -145,7 +145,7 @@ Prism-viewpager is a plugin for prism which provides a ViewPager trigger to trig
 It can be included in your project by adding the following dependency:
 
     dependencies {
-        compile 'com.stylingandroid:prism-viewpager:0.1.0'
+        compile 'com.stylingandroid:prism-viewpager:0.9.0'
     }
 
 There are two components in the `prism-viewpager` library: a _Trigger_ to trigger colour changes from a ViewPager, and a _Setter_ to get the
@@ -213,3 +213,6 @@ If you're not using a _ViewPagerTrigger_ it's pretty easy to manually create the
         .add(glowSetter)
         .build();
 ```
+# Prism PaletteTrigger
+
+Details coming soon...
