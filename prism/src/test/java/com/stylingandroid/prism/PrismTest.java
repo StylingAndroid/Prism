@@ -109,4 +109,31 @@ public class PrismTest {
         verify(floatingActionButton, atLeastOnce()).setBackgroundTintList(any(ColorStateList.class));
     }
 
+    @Test
+    public void givenANullViewThenCreatingABuilderDoesNotThrowAnNpe() {
+        try {
+            Prism.newInstance(null).background((View) null).build();
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void givenANullColourSetterThenCreatingABuilderDoesNotThrowAnNpe() {
+        try {
+            Prism.newInstance(null).add(null).build();
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void givenANullFilterThenCreatingABuilderDoesNotThrowAnNpe() {
+        try {
+            Prism.newInstance(null).background(view, null).build();
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
 }
