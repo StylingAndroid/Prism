@@ -1,6 +1,8 @@
 package com.stylingandroid.prism.viewpager;
 
+import android.support.annotation.ColorInt;
+
 public interface ColourProvider {
-    int getColour(int position);
+    @ColorInt int getColour(int position);
     int getCount();
 }

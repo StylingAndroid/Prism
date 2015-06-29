@@ -1,5 +1,7 @@
 package com.stylingandroid.prism;
 
+import android.support.annotation.ColorInt;
+
 import java.util.List;
 
 class Chameleon implements ColourSetter {
@@ -10,12 +12,12 @@ class Chameleon implements ColourSetter {
     }
 
     @Override
-    public void setColour(int colour) {
+    public void setColour(@ColorInt int colour) {
         setColour(colour, false);
     }
 
     @Override
-    public void setColour(int colour, boolean transientChange) {
+    public void setColour(@ColorInt int colour, boolean transientChange) {
         for (ColourSetter colourSetter : colourSetters) {
             colourSetter.setColour(colour, transientChange);
         }

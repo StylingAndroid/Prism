@@ -1,5 +1,7 @@
 package com.stylingandroid.prism;
 
+import android.support.annotation.ColorInt;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,11 @@ public class BaseColourChangeTrigger implements ColourChangeTrigger {
         return colourSetters.isEmpty();
     }
 
-    protected void setColour(int colour) {
+    protected void setColour(@ColorInt int colour) {
        setColour(colour, false);
     }
 
-    protected void setColour(int colour, boolean transientChange) {
+    protected void setColour(@ColorInt int colour, boolean transientChange) {
         for (ColourSetter colourSetter : colourSetters) {
             colourSetter.setColour(colour, transientChange);
         }

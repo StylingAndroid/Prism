@@ -25,19 +25,19 @@ public final class ColourSetterFactory {
         FACTORIES.remove(factory);
     }
 
-    public static ColourSetter getBackgroundSetter(View view, ColourFilter filter) {
+    public static ColourSetter getBackgroundSetter(View view, ColourFilter<Integer, Integer> filter) {
         return new ViewBackgroundColourSetter(view, filter);
     }
 
-    public static ColourSetter getBackgroundSetter(Window window, ColourFilter filter) {
+    public static ColourSetter getBackgroundSetter(Window window, ColourFilter<Integer, Integer> filter) {
         return new StatusBarColourSetter(window, filter);
     }
 
-    public static ColourSetter getTextSetter(TextView view, ColourFilter filter) {
+    public static ColourSetter getTextSetter(TextView view, ColourFilter<Integer, Integer> filter) {
         return new TextColourSetter(view, filter);
     }
 
-    public static ColourSetter getColourSetter(View view, ColourFilter filter) {
+    public static ColourSetter getColourSetter(View view, ColourFilter<Integer, Integer> filter) {
         ColourSetter setter = null;
         for (SetterFactory factory : FACTORIES) {
             setter = factory.getColourSetter(view, filter);

@@ -1,6 +1,7 @@
 package com.stylingandroid.prism.setter;
 
 import android.content.res.ColorStateList;
+import android.support.annotation.ColorInt;
 import android.view.View;
 
 import com.stylingandroid.prism.filter.ColourFilter;
@@ -17,13 +18,13 @@ class FabColourSetter extends BaseColourSetter {
                 && reflectiveCache.hasMethod(view.getClass(), METHOD_NAME, ColorStateList.class);
     }
 
-    public FabColourSetter(View view, ColourFilter filter) {
+    public FabColourSetter(View view, ColourFilter<Integer, Integer> filter) {
         super(filter);
         methodInvoker = new MethodInvoker<>(view, METHOD_NAME, ColorStateList.class);
     }
 
     @Override
-    public void onSetColour(int colour) {
+    public void onSetColour(@ColorInt int colour) {
         ColorStateList colorStateList = ColorStateList.valueOf(colour).withAlpha(ALPHA_OPAQUE);
         methodInvoker.invoke(colorStateList);
     }
