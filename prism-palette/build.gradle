@@ -35,7 +35,7 @@ ext {
     libraryName = 'prism-palette'
     libraryDescription = 'A trigger for Prism to change colours based on the Palette colours from an image'
     libraryVersion = project.libraryVersion
-    bintrayDryRun = isDryRun()
+    bintrayDryRun = true
 }
 
 apply from: '../config/bintray.gradle'
