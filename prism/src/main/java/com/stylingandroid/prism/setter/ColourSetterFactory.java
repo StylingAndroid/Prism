@@ -6,11 +6,13 @@ import android.widget.TextView;
 
 import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.IdentityFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ColourSetterFactory {
+    public static final ColourFilter<Integer, Integer> IDENTITY_COLOUR_FILTER = new IdentityFilter();
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
     private ColourSetterFactory() {
@@ -39,14 +41,18 @@ public final class ColourSetterFactory {
 
     public static ColourSetter getColourSetter(View view, ColourFilter<Integer, Integer> filter) {
         ColourSetter setter = null;
+        ColourFilter<Integer, Integer> safeFilter = filter;
+        if (filter == null) {
+            safeFilter = IDENTITY_COLOUR_FILTER;
+        }
         for (SetterFactory factory : FACTORIES) {
-            setter = factory.getColourSetter(view, filter);
+            setter = factory.getColourSetter(view, safeFilter);
         }
         if (setter == null) {
             if (FabColourSetter.isFab(view)) {
-                setter = new FabColourSetter(view, filter);
+                setter = new FabColourSetter(view, safeFilter);
             } else {
-                setter = new ViewBackgroundColourSetter(view, filter);
+                setter = new ViewBackgroundColourSetter(view, safeFilter);
             }
         }
         return setter;
