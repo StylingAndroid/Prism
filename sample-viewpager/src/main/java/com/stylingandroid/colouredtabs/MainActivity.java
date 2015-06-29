@@ -14,10 +14,10 @@ import com.stylingandroid.prism.ColourChangeTrigger;
 import com.stylingandroid.prism.Prism;
 import com.stylingandroid.prism.filter.ColourFilter;
 import com.stylingandroid.prism.filter.TintFilter;
-import com.stylingandroid.prism.viewpager.ViewPagerProvider;
+import com.stylingandroid.prism.viewpager.ViewPagerTrigger;
 
 public class MainActivity extends AppCompatActivity {
-    public static final float TINT_FACTOR_50_PERCENT = 0.5f;
+    private static final float TINT_FACTOR_50_PERCENT = 0.5f;
     private View navHeader;
     private AppBarLayout appBar;
     private Toolbar toolbar;
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
         RainbowPagerAdapter adapter = new RainbowPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-        ColourChangeTrigger trigger = ViewPagerProvider.newInstance(viewPager, adapter);
+        ColourChangeTrigger trigger = ViewPagerTrigger.newInstance(viewPager, adapter);
         Prism.newInstance(trigger)
                 .background(appBar)
                 .background(getWindow())
                 .background(navHeader)
-                .colour(fab, tint)
+                .background(fab, tint)
                 .colour(viewPager, tint)
                 .build();
         tabLayout.setupWithViewPager(viewPager);

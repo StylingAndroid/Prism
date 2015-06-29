@@ -18,7 +18,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 public class ShadeFilterTest {
     private static final float ONE_HUNDRED_PERCENT = 1f;
     private static final float ZERO_PERCENT = 0f;
-    private static final int HEX_025 = 0x19;
+    private static final int HEX_102 = 0x66;
 
     @Before
     public void setup() {
@@ -26,26 +26,26 @@ public class ShadeFilterTest {
     }
 
     @Test
-    public void givenASpecificColourForAOneHundredPercentTintThenTheCorrectOutputColourIsProduced() throws Exception {
-        int inputColour = ColourUtils.rgb(ColourUtils.HEX_128, ColourUtils.HEX_128, ColourUtils.HEX_128);
-        int expectedColour = ColourUtils.rgb(ColourUtils.HEX_000, ColourUtils.HEX_000, ColourUtils.HEX_000);
-        ShadeFilter shadeFilter = new ShadeFilter(ZERO_PERCENT);
-        int outputColour = shadeFilter.filter(inputColour);
-        assertThat(outputColour).isEqualTo(expectedColour);
-    }
-
-    @Test
     public void givenASpecificColourForAZeroPercentTintThenTheCorrectOutputColourIsProduced() throws Exception {
         int inputColour = ColourUtils.rgb(ColourUtils.HEX_128, ColourUtils.HEX_128, ColourUtils.HEX_128);
-        ShadeFilter shadeFilter = new ShadeFilter(ONE_HUNDRED_PERCENT);
+        ShadeFilter shadeFilter = new ShadeFilter(ZERO_PERCENT);
         int outputColour = shadeFilter.filter(inputColour);
         assertThat(outputColour).isEqualTo(inputColour);
     }
 
     @Test
+    public void givenASpecificColourForAOneHundredPercentTintThenTheCorrectOutputColourIsProduced() throws Exception {
+        int inputColour = ColourUtils.rgb(ColourUtils.HEX_128, ColourUtils.HEX_128, ColourUtils.HEX_128);
+        int expectedColour = ColourUtils.rgb(ColourUtils.HEX_000, ColourUtils.HEX_000, ColourUtils.HEX_000);
+        ShadeFilter shadeFilter = new ShadeFilter(ONE_HUNDRED_PERCENT);
+        int outputColour = shadeFilter.filter(inputColour);
+        assertThat(outputColour).isEqualTo(expectedColour);
+    }
+
+    @Test
     public void givenASpecificColourForADefaultTintThenTheCorrectOutputColourIsProduced() throws Exception {
         int inputColour = ColourUtils.rgb(ColourUtils.HEX_128, ColourUtils.HEX_128, ColourUtils.HEX_128);
-        int expected = ColourUtils.rgb(HEX_025, HEX_025, HEX_025);
+        int expected = ColourUtils.rgb(HEX_102, HEX_102, HEX_102);
         ShadeFilter shadeFilter = new ShadeFilter();
         int outputColour = shadeFilter.filter(inputColour);
         assertThat(outputColour).isEqualTo(expected);

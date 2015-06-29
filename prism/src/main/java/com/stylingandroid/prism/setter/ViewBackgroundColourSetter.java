@@ -8,7 +8,7 @@ import com.stylingandroid.prism.filter.ColourFilter;
 class ViewBackgroundColourSetter extends BaseColourSetter {
     private final View view;
 
-    public ViewBackgroundColourSetter(View view, ColourFilter<Integer, Integer> filter) {
+    public ViewBackgroundColourSetter(View view, ColourFilter filter) {
         super(filter);
         this.view = view;
     }

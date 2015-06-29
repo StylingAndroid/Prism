@@ -12,7 +12,7 @@ public class ShadeFilter extends RepeatableColourFilter {
 
     public ShadeFilter(float shadeFactor) {
         super();
-        this.shadeFactor = shadeFactor;
+        this.shadeFactor = 1f - shadeFactor;
     }
 
     @Override

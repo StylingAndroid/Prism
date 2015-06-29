@@ -15,7 +15,7 @@ public class StatusBarColourSetterAccessor extends BaseColourSetter {
         return new StatusBarColourSetterAccessor(setter, identityFilter);
     }
 
-    private StatusBarColourSetterAccessor(StatusBarColourSetter statusBarColourSetter, ColourFilter<Integer, Integer> filter) {
+    private StatusBarColourSetterAccessor(StatusBarColourSetter statusBarColourSetter, ColourFilter filter) {
         super(filter);
         this.statusBarColourSetter = statusBarColourSetter;
     }

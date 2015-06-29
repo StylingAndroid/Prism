@@ -50,7 +50,7 @@ public class BaseColourSetterTest {
     private class TransientColourSetter extends BaseColourSetter {
         private boolean onSetColourCalled = false;
 
-        protected TransientColourSetter(ColourFilter<Integer, Integer> filter) {
+        protected TransientColourSetter(ColourFilter filter) {
             super(filter, true);
         }
 
@@ -63,7 +63,7 @@ public class BaseColourSetterTest {
     private class NonTransientColourSetter extends BaseColourSetter {
         private boolean onSetColourCalled = false;
 
-        protected NonTransientColourSetter(ColourFilter<Integer, Integer> filter) {
+        protected NonTransientColourSetter(ColourFilter filter) {
             super(filter, false);
         }
 

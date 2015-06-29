@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Prism {
-    private static final ColourFilter<Integer, Integer> STATUS_BAR_COLOUR_FILTER = new StatusBarFilter();
+    private static final ColourFilter STATUS_BAR_COLOUR_FILTER = new StatusBarFilter();
     private final List<ColourSetter> colourSetters;
     private final ColourChangeTrigger colourChangeTrigger;
 
@@ -32,7 +32,7 @@ public final class Prism {
         return background(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
     }
 
-    public Prism background(@NonNull View view, @NonNull ColourFilter<Integer, Integer> filter) {
+    public Prism background(@NonNull View view, @NonNull ColourFilter filter) {
         return add(ColourSetterFactory.getBackgroundSetter(view, filter));
     }
 
@@ -40,7 +40,7 @@ public final class Prism {
         return background(window, STATUS_BAR_COLOUR_FILTER);
     }
 
-    public Prism background(@NonNull Window window, @NonNull ColourFilter<Integer, Integer> filter) {
+    public Prism background(@NonNull Window window, @NonNull ColourFilter filter) {
         return add(ColourSetterFactory.getBackgroundSetter(window, filter));
     }
 
@@ -53,7 +53,7 @@ public final class Prism {
         return text(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
     }
 
-    public Prism text(@NonNull TextView view, @NonNull ColourFilter<Integer, Integer> filter) {
+    public Prism text(@NonNull TextView view, @NonNull ColourFilter filter) {
         return add(ColourSetterFactory.getTextSetter(view, filter));
     }
 
@@ -61,7 +61,7 @@ public final class Prism {
         return colour(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
     }
 
-    public Prism colour(@NonNull View view, @NonNull ColourFilter<Integer, Integer> filter) {
+    public Prism colour(@NonNull View view, @NonNull ColourFilter filter) {
         return add(ColourSetterFactory.getColourSetter(view, filter));
     }
 

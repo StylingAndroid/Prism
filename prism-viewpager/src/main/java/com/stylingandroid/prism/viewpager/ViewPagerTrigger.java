@@ -6,20 +6,20 @@ import com.stylingandroid.prism.BaseColourChangeTrigger;
 import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.setter.ViewPagerColourSetterFactory;
 
-public class ViewPagerProvider extends BaseColourChangeTrigger implements ViewPager.OnPageChangeListener {
+public class ViewPagerTrigger extends BaseColourChangeTrigger implements ViewPager.OnPageChangeListener {
     private final ColourProvider colourProvider;
     private ColourAnimator colourAnimator;
     private int currentPosition;
 
-    public static ViewPagerProvider newInstance(ViewPager viewPager, ColourProvider colourProvider) {
+    public static ViewPagerTrigger newInstance(ViewPager viewPager, ColourProvider colourProvider) {
         ViewPagerColourSetterFactory.initialise();
-        ViewPagerProvider viewPagerProvider = new ViewPagerProvider(colourProvider);
-        viewPager.addOnPageChangeListener(viewPagerProvider);
-        viewPagerProvider.onPageSelected(0);
-        return viewPagerProvider;
+        ViewPagerTrigger viewPagerTrigger = new ViewPagerTrigger(colourProvider);
+        viewPager.addOnPageChangeListener(viewPagerTrigger);
+        viewPagerTrigger.onPageSelected(0);
+        return viewPagerTrigger;
     }
 
-    public ViewPagerProvider(ColourProvider colourProvider) {
+    public ViewPagerTrigger(ColourProvider colourProvider) {
         this.colourProvider = colourProvider;
     }
 

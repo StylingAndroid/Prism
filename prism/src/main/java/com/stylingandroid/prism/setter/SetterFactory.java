@@ -6,5 +6,5 @@ import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.filter.ColourFilter;
 
 public interface SetterFactory {
-    ColourSetter getColourSetter(View view, ColourFilter<Integer, Integer> filter);
+    ColourSetter getColourSetter(View view, ColourFilter filter);
 }

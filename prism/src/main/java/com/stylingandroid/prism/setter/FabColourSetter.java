@@ -18,7 +18,7 @@ class FabColourSetter extends BaseColourSetter {
                 && reflectiveCache.hasMethod(view.getClass(), METHOD_NAME, ColorStateList.class);
     }
 
-    public FabColourSetter(View view, ColourFilter<Integer, Integer> filter) {
+    public FabColourSetter(View view, ColourFilter filter) {
         super(filter);
         methodInvoker = new MethodInvoker<>(view, METHOD_NAME, ColorStateList.class);
     }

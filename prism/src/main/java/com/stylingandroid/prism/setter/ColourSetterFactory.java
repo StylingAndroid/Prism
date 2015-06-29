@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ColourSetterFactory {
-    public static final ColourFilter<Integer, Integer> IDENTITY_COLOUR_FILTER = new IdentityFilter();
+    public static final ColourFilter IDENTITY_COLOUR_FILTER = new IdentityFilter();
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
     private ColourSetterFactory() {
@@ -27,34 +27,40 @@ public final class ColourSetterFactory {
         FACTORIES.remove(factory);
     }
 
-    public static ColourSetter getBackgroundSetter(View view, ColourFilter<Integer, Integer> filter) {
-        return new ViewBackgroundColourSetter(view, filter);
-    }
-
-    public static ColourSetter getBackgroundSetter(Window window, ColourFilter<Integer, Integer> filter) {
-        return new StatusBarColourSetter(window, filter);
-    }
-
-    public static ColourSetter getTextSetter(TextView view, ColourFilter<Integer, Integer> filter) {
-        return new TextColourSetter(view, filter);
-    }
-
-    public static ColourSetter getColourSetter(View view, ColourFilter<Integer, Integer> filter) {
-        ColourSetter setter = null;
-        ColourFilter<Integer, Integer> safeFilter = filter;
-        if (filter == null) {
-            safeFilter = IDENTITY_COLOUR_FILTER;
+    public static ColourSetter getBackgroundSetter(View view, ColourFilter filter) {
+        if (FabColourSetter.isFab(view)) {
+            return new FabColourSetter(view, getSafeColourFilter(filter));
         }
+        return new ViewBackgroundColourSetter(view, getSafeColourFilter(filter));
+    }
+
+    public static ColourSetter getBackgroundSetter(Window window, ColourFilter filter) {
+        return new StatusBarColourSetter(window, getSafeColourFilter(filter));
+    }
+
+    public static ColourSetter getTextSetter(TextView view, ColourFilter filter) {
+        return new TextColourSetter(view, getSafeColourFilter(filter));
+    }
+
+    public static ColourSetter getColourSetter(View view, ColourFilter filter) {
+        ColourSetter setter = null;
         for (SetterFactory factory : FACTORIES) {
-            setter = factory.getColourSetter(view, safeFilter);
+            setter = factory.getColourSetter(view, getSafeColourFilter(filter));
         }
         if (setter == null) {
             if (FabColourSetter.isFab(view)) {
-                setter = new FabColourSetter(view, safeFilter);
+                setter = new FabColourSetter(view, getSafeColourFilter(filter));
             } else {
-                setter = new ViewBackgroundColourSetter(view, safeFilter);
+                setter = new ViewBackgroundColourSetter(view, getSafeColourFilter(filter));
             }
         }
         return setter;
+    }
+
+    private static ColourFilter getSafeColourFilter(ColourFilter colourFilter) {
+        if (colourFilter != null) {
+            return colourFilter;
+        }
+        return IDENTITY_COLOUR_FILTER;
     }
 }

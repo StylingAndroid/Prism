@@ -12,19 +12,27 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.EdgeEffectCompat;
 import android.widget.EdgeEffect;
 
 import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.IdentityFilter;
 
 public abstract class ViewPagerGlowSetter extends BaseColourSetter {
+    private static final IdentityFilter IDENTITY_FILTER = new IdentityFilter();
 
-    private ViewPagerGlowSetter(ColourFilter<Integer, Integer> filter) {
+    private ViewPagerGlowSetter(ColourFilter filter) {
         super(filter, false);
     }
 
-    public static ViewPagerGlowSetter newInstance(ViewPager view, ColourFilter<Integer, Integer> filter) {
+    public static ViewPagerGlowSetter newInstance(@NonNull ViewPager view) {
+        return newInstance(view, IDENTITY_FILTER);
+    }
+
+    public static ViewPagerGlowSetter newInstance(@NonNull ViewPager view, @Nullable ColourFilter filter) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return newInstanceLollipop(view, filter);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -35,7 +43,7 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private static ViewPagerGlowSetter newInstanceLollipop(ViewPager view, ColourFilter<Integer, Integer> filter) {
+    private static ViewPagerGlowSetter newInstanceLollipop(ViewPager view, ColourFilter filter) {
         FieldAccessor<EdgeEffectCompat> leftField = new FieldAccessor<>(view, "mLeftEdge", EdgeEffectCompat.class);
         FieldAccessor<EdgeEffectCompat> rightField = new FieldAccessor<>(view, "mRightEdge", EdgeEffectCompat.class);
         FieldAccessor<EdgeEffect> leftEdgeEffectAccessor = new FieldAccessor<>(leftField.get(), "mEdgeEffect", EdgeEffect.class);
@@ -46,7 +54,7 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-    private static ViewPagerGlowSetter newInstanceIcs(ViewPager view, ColourFilter<Integer, Integer> filter) {
+    private static ViewPagerGlowSetter newInstanceIcs(ViewPager view, ColourFilter filter) {
         Resources resources = view.getResources();
         int glowId = resources.getIdentifier("overscroll_glow", "drawable", "android");
         int edgeId = resources.getIdentifier("overscroll_edge", "drawable", "android");
@@ -68,7 +76,7 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
         private final EdgeEffect leftEdgeEffect;
         private final EdgeEffect rightEdgeEffect;
 
-        public GlowSetterLollipop(ColourFilter<Integer, Integer> filter, EdgeEffect leftEdgeEffect, EdgeEffect rightEdgeEffect) {
+        public GlowSetterLollipop(ColourFilter filter, EdgeEffect leftEdgeEffect, EdgeEffect rightEdgeEffect) {
             super(filter);
             this.leftEdgeEffect = leftEdgeEffect;
             this.rightEdgeEffect = rightEdgeEffect;
@@ -86,7 +94,7 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
         private final Setter left;
         private final Setter right;
 
-        private GlowSetterIcs(ColourFilter<Integer, Integer> filter, Setter left, Setter right) {
+        private GlowSetterIcs(ColourFilter filter, Setter left, Setter right) {
             super(filter);
             this.left = left;
             this.right = right;
@@ -147,11 +155,13 @@ public abstract class ViewPagerGlowSetter extends BaseColourSetter {
         }
 
     }
+
     private static final class ViewPagerGlowSetterLegacy extends ViewPagerGlowSetter {
 
-        private ViewPagerGlowSetterLegacy(ColourFilter<Integer, Integer> filter) {
+        private ViewPagerGlowSetterLegacy(ColourFilter filter) {
             super(filter);
         }
+
         @Override
         public void onSetColour(@ColorInt int colour) {
 

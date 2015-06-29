@@ -11,11 +11,11 @@ class StatusBarColourSetter extends BaseColourSetter {
     private final Window window;
     private final int osVersion;
 
-    public StatusBarColourSetter(Window window, ColourFilter<Integer, Integer> filter) {
+    public StatusBarColourSetter(Window window, ColourFilter filter) {
         this(window, filter, Build.VERSION.SDK_INT);
     }
 
-    StatusBarColourSetter(Window window, ColourFilter<Integer, Integer> filter, int osVersion) {
+    StatusBarColourSetter(Window window, ColourFilter filter, int osVersion) {
         super(filter);
         this.window = window;
         this.osVersion = osVersion;
