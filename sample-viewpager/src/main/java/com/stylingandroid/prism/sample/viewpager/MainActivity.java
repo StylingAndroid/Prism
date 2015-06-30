@@ -1,4 +1,4 @@
-package com.stylingandroid.colouredtabs;
+package com.stylingandroid.prism.sample.viewpager;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;

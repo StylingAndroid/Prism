@@ -1,4 +1,4 @@
-package com.stylingandroid.colouredtabs;
+package com.stylingandroid.prism.sample.viewpager;
 
 import android.content.Context;
 import android.graphics.Color;
