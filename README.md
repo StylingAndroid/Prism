@@ -3,7 +3,7 @@
 
 ![Build Status](https://ci.stylingandroid.com/jenkins/buildStatus/icon?job=Prism "Build Status")
 
-To use the libraies below you will need to add the Styling Android repo:
+To use the libraries below you will need to add the Styling Android repo:
 
     repositories {
         maven {
@@ -38,7 +38,7 @@ degrade gracefully (no crashing!) so you can safely use it and allow the setter 
 The standard setters built in to Prism are:
 
 * `FabColourSetter(FloatingActionButton fab)` - sets the background tint colour on the design support library implementation of _FloatingActionButton_
-* `StatusBarFactory(Window window)` - sets the status bar colour on the supplied Window. Note that this does not take a _View_.
+* `StatusBarSetter(Window window)` - sets the status bar colour on the supplied Window. Note that this does not take a _View_.
 * `TextColourSetter(TextView textView)` - sets the text colour on the supplied _TextView_.
 * `ViewBackgroundColourSetter(View view)` - sets the background colour of the supplied _View_.
 
@@ -56,7 +56,7 @@ performs some colour transformation upon that colour, and returns the transforme
 * `IdentityFilter()` - returns the colour which was input.
 * `ShadeFilter(float amount)` - darkens the colour by effectively mixing in black. The value is a float from 0.0-1.0 which determines how much black
 to add. A value of 0 makes no change, and a value of 1.0 will produce pure black
-* `Tint(float amount)` - lightens the colour by effectively mixing in white. The value is a float from 0.0-1.0 which determines how much white
+* `TintFilter(float amount)` - lightens the colour by effectively mixing in white. The value is a float from 0.0-1.0 which determines how much white
 to add. A value of 0 makes no change, and a value of 1.0 will produce pure white.
 
 Once again it is possible to create your own _Filters_ and that will be covered in the advanced documentation.
@@ -135,7 +135,7 @@ from having to implement a lot of boilerplate code to do the same thing. However
 impressive behaviour for very little extra work. I would urge you to take a look at the _ViewPagerTrigger_ documentation below to really see this
 in action.
 
-#Prism VewPager
+#Prism ViewPager
 [ ![Download](https://api.bintray.com/packages/stylingandroid/maven/prism-viewpager/images/download.svg) ](https://bintray.com/stylingandroid/maven/prism-viewpager/_latestVersion)
 
 Prism-viewpager is a plugin for prism which provides a ViewPager trigger to trigger colour changes, and also a ViewPager Setter which enables the
