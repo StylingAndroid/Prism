@@ -18,9 +18,14 @@ public final class Prism {
     private final List<ColourSetter> colourSetters;
     private final ColourChangeTrigger colourChangeTrigger;
 
-    public static Prism newInstance(@Nullable ColourChangeTrigger colourChangeTrigger) {
+    public static Prism newInstance(@NonNull ColourChangeTrigger colourChangeTrigger) {
         List<ColourSetter> colourSetters = new ArrayList<>();
         return new Prism(colourChangeTrigger, colourSetters);
+    }
+
+    public static Prism newInstance() {
+        List<ColourSetter> colourSetters = new ArrayList<>();
+        return new Prism(null, colourSetters);
     }
 
     private Prism(@Nullable ColourChangeTrigger colourChangeTrigger, @NonNull List<ColourSetter> colourSetters) {

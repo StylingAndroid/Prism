@@ -109,7 +109,7 @@ protected void onCreate(Bundle savedInstanceState) {
     setSupportActionBar(toolbar);
 
     ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-    prism = Prism.newInstance(null)
+    prism = Prism.newInstance()
         .background(appBar)
         .background(getWindow())
         .text(tetView)
