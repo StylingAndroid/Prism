@@ -57,9 +57,9 @@ public class PrismTest {
     }
 
     @Test
-    public void givenANullTriggerThenPrismCreationDoesNotNPE() {
+    public void givenNoTriggerThenPrismCreationDoesNotNPE() {
         try {
-            Prism.newInstance(null).build();
+            Prism.newInstance().build();
         } catch (Exception e) {
             Assert.fail();
         }
@@ -112,7 +112,7 @@ public class PrismTest {
     @Test
     public void givenANullViewThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance(null).background((View) null).build();
+            Prism.newInstance().background((View) null).build();
         } catch (Exception e) {
             Assert.fail();
         }
@@ -121,7 +121,7 @@ public class PrismTest {
     @Test
     public void givenANullColourSetterThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance(null).add(null).build();
+            Prism.newInstance().add(null).build();
         } catch (Exception e) {
             Assert.fail();
         }
@@ -130,7 +130,7 @@ public class PrismTest {
     @Test
     public void givenANullFilterThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance(null).background(view, null).build();
+            Prism.newInstance().background(view, null).build();
         } catch (Exception e) {
             Assert.fail();
         }
