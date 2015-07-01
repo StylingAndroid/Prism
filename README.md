@@ -118,8 +118,8 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-That will connect everything up without a _Trigger_ the `null` in the `newInstance()` call did that. We can now trigger it manually by simply calling
-`setColour(int colour)` on the `prism` instance:
+That will connect everything up without a _Trigger_ - the zero-argument form `newInstance()` call did that. We can now trigger it manually by
+simply calling `setColour(int colour)` on the `prism` instance:
 
 ```java
 prism.setColour(Colour.RED);
