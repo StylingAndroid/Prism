@@ -6,16 +6,29 @@ import android.os.Build;
 
 public abstract class ArgbEvaluatorCompat {
     public static ArgbEvaluatorCompat newInstance() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        return newInstance(Build.VERSION.SDK_INT);
+    }
+
+    static ArgbEvaluatorCompat newInstance(int buildVersion) {
+        if (buildVersion >= Build.VERSION_CODES.HONEYCOMB) {
             return new ArgbEvaluatorHoneycomb();
         }
         return new ArgbEvaluatorLegacy();
     }
+
     public abstract Object evaluate(float fraction, Object startValue, Object endValue);
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private static class ArgbEvaluatorHoneycomb extends ArgbEvaluatorCompat {
-        private final ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+    static class ArgbEvaluatorHoneycomb extends ArgbEvaluatorCompat {
+        private final ArgbEvaluator argbEvaluator;
+
+        ArgbEvaluatorHoneycomb() {
+            this(new ArgbEvaluator());
+        }
+
+        ArgbEvaluatorHoneycomb(ArgbEvaluator argbEvaluator) {
+            this.argbEvaluator = argbEvaluator;
+        }
 
         @Override
         public Object evaluate(float fraction, Object startValue, Object endValue) {
@@ -23,7 +36,7 @@ public abstract class ArgbEvaluatorCompat {
         }
     }
 
-    private static class ArgbEvaluatorLegacy extends ArgbEvaluatorCompat {
+    static class ArgbEvaluatorLegacy extends ArgbEvaluatorCompat {
         private static final int EIGHT_BITS = 8;
         private static final int SIXTEEN_BITS = 16;
         private static final int TWENTY_FOUR_BITS = 24;
