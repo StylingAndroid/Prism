@@ -13,6 +13,12 @@ public class ArgbEvaluatorCompatTest {
     }
 
     @Test
+    public void givenNoAndroidVersionThenALegacyArgbEvaluatorIsReturned() {
+        ArgbEvaluatorCompat argbEvaluator = ArgbEvaluatorCompat.newInstance();
+        assertThat(argbEvaluator).isInstanceOf(ArgbEvaluatorCompat.ArgbEvaluatorLegacy.class);
+    }
+
+    @Test
     public void givenAPostHoneycombAndroidVersionThenAHoneycombArgbEvaluatorIsReturned() {
         ArgbEvaluatorCompat argbEvaluator = ArgbEvaluatorCompat.newInstance(22);
         assertThat(argbEvaluator).isInstanceOf(ArgbEvaluatorCompat.ArgbEvaluatorHoneycomb.class);
