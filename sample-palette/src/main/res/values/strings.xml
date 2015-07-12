@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Prism Palette</string>
-
-  <string name="hello_world">Hello world!</string>
-  <string name="action_settings">Settings</string>
+  <string name="select_image">Select Image</string>
+  <string name="load_error">Unable to load image</string>
+  <string name="title_text">Title Text</string>
+  <string name="body_text">Body Text</string>
 </resources>

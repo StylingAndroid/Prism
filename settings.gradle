@@ -1,1 +1,1 @@
-include ':prism', ':prism-viewpager', ':prism-palette', ':sample-viewpager', ':test-lib'
+include ':prism', ':prism-viewpager', ':prism-palette', ':sample-viewpager', ':sample-palette', ':test-lib'

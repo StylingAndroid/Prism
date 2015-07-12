@@ -1,8 +1,127 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent" android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-  android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin"
-  android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/main_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
-  <TextView android:text="@string/hello_world" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+
+    <android.support.design.widget.AppBarLayout
+      android:id="@+id/app_bar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_scrollFlags="scroll|enterAlways" />
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+      android:id="@+id/swatches_vibrant"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/swatch_height"
+      android:layout_below="@id/app_bar"
+      android:orientation="horizontal">
+
+      <View
+        android:id="@+id/swatch_vibrant"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+      <View
+        android:id="@+id/swatch_vibrant_light"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+      <View
+        android:id="@+id/swatch_vibrant_dark"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/swatches_muted"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/swatch_height"
+      android:layout_below="@id/swatches_vibrant"
+      android:orientation="horizontal">
+
+      <View
+        android:id="@+id/swatch_muted"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+      <View
+        android:id="@+id/swatch_muted_light"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+      <View
+        android:id="@+id/swatch_muted_dark"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <ImageView
+      android:id="@+id/image"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/swatches_muted"
+      android:layout_centerInParent="true"
+      android:layout_margin="8dp"
+      android:adjustViewBounds="true"
+      android:contentDescription="@null"
+      android:scaleType="centerInside" />
+
+    <TextView
+      android:id="@+id/title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignTop="@id/image"
+      android:layout_alignLeft="@id/image"
+      android:layout_alignStart="@id/image"
+      android:padding="8dp"
+      android:text="@string/title_text"
+      android:textAppearance="@android:style/TextAppearance.Large"
+      android:visibility="gone" />
+
+
+    <TextView
+      android:id="@+id/body"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignBottom="@id/image"
+      android:layout_alignLeft="@id/image"
+      android:layout_alignStart="@id/image"
+      android:padding="8dp"
+      android:text="@string/body_text"
+      android:textAppearance="@android:style/TextAppearance.Small"
+      android:visibility="gone" />
+
+  </RelativeLayout>
+
+  <android.support.design.widget.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="end|bottom"
+    android:layout_margin="16dp"
+    android:src="@drawable/ic_image"
+    app:borderWidth="0dp" />
+
+
+</android.support.design.widget.CoordinatorLayout>

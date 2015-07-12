@@ -5,9 +5,8 @@ import android.support.v7.graphics.DummyGenerator;
 import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.PaletteFactory;
 
-import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.ColourUtils;
-import com.stylingandroid.prism.filter.ChainableColourFilter;
+import com.stylingandroid.prism.filter.ColourFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -24,17 +22,14 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Color.class)
-public class PaletteProviderTest {
+public class PaletteTriggerTest {
     private static final int VIBRANT = ColourUtils.rgb(ColourUtils.HEX_255, ColourUtils.HEX_000, ColourUtils.HEX_000);
     private static final int LIGHT_VIBRANT = ColourUtils.rgb(ColourUtils.HEX_000, ColourUtils.HEX_255, ColourUtils.HEX_000);
     private static final int DARK_VIBRANT = ColourUtils.rgb(ColourUtils.HEX_000, ColourUtils.HEX_000, ColourUtils.HEX_255);
     private static final int MUTED = ColourUtils.rgb(ColourUtils.HEX_255, ColourUtils.HEX_255, ColourUtils.HEX_000);
     private static final int LIGHT_MUTED = ColourUtils.rgb(ColourUtils.HEX_255, ColourUtils.HEX_000, ColourUtils.HEX_255);
     private static final int DARK_MUTED = ColourUtils.rgb(ColourUtils.HEX_000, ColourUtils.HEX_255, ColourUtils.HEX_255);
-    private PaletteProvider paletteProvider;
-
-    @Mock
-    private ColourSetter colourSetter;
+    private PaletteTrigger paletteTrigger;
 
     @Before
     public void setUp() throws Exception {
@@ -48,54 +43,48 @@ public class PaletteProviderTest {
         swatches.add(new Palette.Swatch(LIGHT_MUTED, 100));
         swatches.add(new Palette.Swatch(DARK_MUTED, 100));
         Palette palette = PaletteFactory.createPalette(swatches, new DummyGenerator());
-        paletteProvider = new PaletteProvider(colourSetter);
-        paletteProvider.setPalette(palette);
+        paletteTrigger = new PaletteTrigger();
+        paletteTrigger.setPalette(palette);
     }
 
     @Test
     public void givenADummyPaletteVibrantColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getVibrantFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteLightVibrantColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getLightVibrantFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteDarkVibrantColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getDarkVibrantFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getDarkVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteMutedColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getMutedFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(MUTED);
     }
 
     @Test
     public void givenADummyPaletteLightMutedColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getLightMutedFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getLightMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_MUTED);
     }
 
     @Test
     public void givenADummyPaletteDarkMutedColourIsCorrect() {
-        ChainableColourFilter<Void, Palette.Swatch> filter = paletteProvider.getDarkMutedFilter();
-        filter.setNextFilter(paletteProvider.getColour());
+        ColourFilter filter = paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_MUTED);
     }

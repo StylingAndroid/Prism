@@ -3,9 +3,11 @@
 buildscript {
     repositories {
         jcenter()
+        maven { url 'https://repos.zeroturnaround.com/nexus/content/repositories/zt-public-releases' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.zeroturnaround.jrebel.android:jr-android-gradle:0.8.+'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
 
