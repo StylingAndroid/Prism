@@ -4,22 +4,27 @@ import android.support.v4.view.ViewPager;
 
 import com.stylingandroid.prism.BaseTrigger;
 import com.stylingandroid.prism.Setter;
-import com.stylingandroid.prism.setter.ViewPagerColourSetterFactory;
+import com.stylingandroid.prism.setter.ViewPagerSetterFactory;
 
 public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageChangeListener {
     private final ColourProvider colourProvider;
     private ColourAnimator colourAnimator;
     private int currentPosition;
 
+    public static ViewPagerTrigger newInstance(ViewPager viewPager, ColorProvider colorProvider) {
+        ColourProvider colourProvider = new ColorProviderAdapter(colorProvider);
+        return newInstance(viewPager, colourProvider);
+    }
+
     public static ViewPagerTrigger newInstance(ViewPager viewPager, ColourProvider colourProvider) {
-        ViewPagerColourSetterFactory.initialise();
+        ViewPagerSetterFactory.initialise();
         ViewPagerTrigger viewPagerTrigger = new ViewPagerTrigger(colourProvider);
         viewPager.addOnPageChangeListener(viewPagerTrigger);
         viewPagerTrigger.onPageSelected(0);
         return viewPagerTrigger;
     }
 
-    public ViewPagerTrigger(ColourProvider colourProvider) {
+    ViewPagerTrigger(ColourProvider colourProvider) {
         this.colourProvider = colourProvider;
     }
 

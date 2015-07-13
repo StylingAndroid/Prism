@@ -6,10 +6,10 @@ import android.view.View;
 import com.stylingandroid.prism.Setter;
 import com.stylingandroid.prism.filter.Filter;
 
-public class ViewPagerColourSetterFactory implements SetterFactory {
+public class ViewPagerSetterFactory implements SetterFactory {
 
     public static void initialise() {
-        ColourSetterFactory.registerFactory(new ViewPagerColourSetterFactory());
+        ColourSetterFactory.registerFactory(new ViewPagerSetterFactory());
     }
 
     @Override
