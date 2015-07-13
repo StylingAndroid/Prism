@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private FloatingActionButton fab;
 
+    private Prism prism = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
         setupToolbar();
         setupViewPager();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (prism != null) {
+            prism.destroy();
+        }
+        super.onDestroy();
     }
 
     private void setupToolbar() {
@@ -72,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         Filter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
         Trigger trigger = ViewPagerTrigger.newInstance(viewPager, adapter);
-        Prism.Builder.newInstance()
+        prism = Prism.Builder.newInstance()
                 .add(trigger)
                 .background(appBar)
                 .background(getWindow())

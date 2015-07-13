@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements Setter {
 
     private Bitmap bitmap = null;
 
+    private Prism prism = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements Setter {
         bodyText = (TextView) findViewById(R.id.body);
 
         paletteTrigger = new PaletteTrigger();
-        Prism.Builder.newInstance()
+        prism = Prism.Builder.newInstance()
                 .add(paletteTrigger)
                 .background(vibrant, paletteTrigger.getVibrantFilter(paletteTrigger.getColour()))
                 .background(vibrantLight, paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour()))
@@ -69,6 +71,14 @@ public class MainActivity extends AppCompatActivity implements Setter {
 
         setupToolbar();
         setupFab();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (prism!= null) {
+            prism.destroy();
+        }
+        super.onDestroy();
     }
 
     private void setupToolbar() {

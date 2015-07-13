@@ -36,12 +36,19 @@ public class Prism implements Setter {
 
     public void add(Trigger trigger) {
         triggers.add(trigger);
-        trigger.addColourSetter(this);
+        trigger.addSetter(this);
     }
 
     public void remove(Trigger trigger) {
-        trigger.removeColourSetter(this);
+        trigger.removeSetter(this);
         triggers.remove(trigger);
+    }
+
+    public void destroy() {
+        for (Trigger trigger : triggers) {
+            remove(trigger);
+        }
+        setters.clear();
     }
 
     public static final class Builder {
@@ -84,7 +91,7 @@ public class Prism implements Setter {
         }
 
         public Builder add(@NonNull Trigger trigger) {
-            if (null != trigger) {
+            if (trigger != null) {
                 triggers.add(trigger);
             }
             return this;
@@ -114,10 +121,10 @@ public class Prism implements Setter {
             return colour(view, filter);
         }
 
-        public Setter build() {
+        public Prism build() {
             Prism prism = new Prism(triggers, setters);
             for (Trigger trigger : triggers) {
-                trigger.addColourSetter(prism);
+                trigger.addSetter(prism);
             }
             return prism;
         }

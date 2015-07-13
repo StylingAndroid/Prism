@@ -68,7 +68,7 @@ public class BuilderTest {
     @Test
     public void givenANonNullTriggerThenPrismCreationSetsTheTriggerCorrectly() {
         Prism.Builder.newInstance().add(trigger).build();
-        verify(trigger, atLeastOnce()).addColourSetter(any(Setter.class));
+        verify(trigger, atLeastOnce()).addSetter(any(Setter.class));
     }
 
     @Test

@@ -9,12 +9,12 @@ public class BaseTrigger implements Trigger {
     private final List<Setter> setters = new ArrayList<>();
 
     @Override
-    public void addColourSetter(Setter setter) {
+    public void addSetter(Setter setter) {
         setters.add(setter);
     }
 
     @Override
-    public void removeColourSetter(Setter setter) {
+    public void removeSetter(Setter setter) {
         setters.remove(setter);
     }
 

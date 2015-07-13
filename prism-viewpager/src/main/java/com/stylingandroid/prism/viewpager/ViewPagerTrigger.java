@@ -17,7 +17,6 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
     }
 
     public static ViewPagerTrigger newInstance(ViewPager viewPager, ColourProvider colourProvider) {
-        ViewPagerSetterFactory.initialise();
         ViewPagerTrigger viewPagerTrigger = new ViewPagerTrigger(colourProvider);
         viewPager.addOnPageChangeListener(viewPagerTrigger);
         viewPagerTrigger.onPageSelected(0);
@@ -78,12 +77,21 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
     }
 
     @Override
-    public void addColourSetter(Setter setter) {
+    public void addSetter(Setter setter) {
         boolean shouldInitialise = hasNoColourSetters();
-        super.addColourSetter(setter);
+        super.addSetter(setter);
         if (shouldInitialise) {
+            ViewPagerSetterFactory.register();
             int newColour = colourProvider.getColour(currentPosition);
             setColour(newColour, false);
+        }
+    }
+
+    @Override
+    public void removeSetter(Setter setter) {
+        super.removeSetter(setter);
+        if (hasNoColourSetters()) {
+            ViewPagerSetterFactory.unregister();
         }
     }
 }
