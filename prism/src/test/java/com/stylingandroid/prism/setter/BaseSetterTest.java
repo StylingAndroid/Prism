@@ -3,7 +3,7 @@ package com.stylingandroid.prism.setter;
 import android.support.annotation.ColorInt;
 
 import com.stylingandroid.prism.ColourUtils;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.IdentityFilter;
 
 import org.junit.Before;
@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-public class BaseColourSetterTest {
+public class BaseSetterTest {
     private IdentityFilter identityFilter;
 
     @Before
@@ -21,36 +21,36 @@ public class BaseColourSetterTest {
 
     @Test
     public void givenATransientColourSetterTransientEventsAreHandled() {
-        TransientColourSetter colourSetter = new TransientColourSetter(identityFilter);
+        TransientSetter colourSetter = new TransientSetter(identityFilter);
         colourSetter.setColour(ColourUtils.TEST_COLOUR, true);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 
     @Test
     public void givenATransientColourSetterNonTransientEventsAreHandled() {
-        TransientColourSetter colourSetter = new TransientColourSetter(identityFilter);
+        TransientSetter colourSetter = new TransientSetter(identityFilter);
         colourSetter.setColour(ColourUtils.TEST_COLOUR, false);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 
     @Test
     public void givenANonTransientColourSetterTransientEventsAreNotHandled() {
-        NonTransientColourSetter colourSetter = new NonTransientColourSetter(identityFilter);
+        NonTransientSetter colourSetter = new NonTransientSetter(identityFilter);
         colourSetter.setColour(ColourUtils.TEST_COLOUR, true);
         assertThat(colourSetter.onSetColourCalled).isFalse();
     }
 
     @Test
     public void givenANonTransientColourSetterNonTransientEventsAreHandled() {
-        NonTransientColourSetter colourSetter = new NonTransientColourSetter(identityFilter);
+        NonTransientSetter colourSetter = new NonTransientSetter(identityFilter);
         colourSetter.setColour(ColourUtils.TEST_COLOUR, false);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 
-    private class TransientColourSetter extends BaseColourSetter {
+    private class TransientSetter extends BaseSetter {
         private boolean onSetColourCalled = false;
 
-        protected TransientColourSetter(ColourFilter filter) {
+        protected TransientSetter(Filter filter) {
             super(filter, true);
         }
 
@@ -60,10 +60,10 @@ public class BaseColourSetterTest {
         }
     }
 
-    private class NonTransientColourSetter extends BaseColourSetter {
+    private class NonTransientSetter extends BaseSetter {
         private boolean onSetColourCalled = false;
 
-        protected NonTransientColourSetter(ColourFilter filter) {
+        protected NonTransientSetter(Filter filter) {
             super(filter, false);
         }
 

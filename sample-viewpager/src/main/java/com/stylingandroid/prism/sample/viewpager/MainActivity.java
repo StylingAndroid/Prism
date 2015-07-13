@@ -13,9 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.stylingandroid.prism.ColourChangeTrigger;
 import com.stylingandroid.prism.Prism;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.Trigger;
+import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.TintFilter;
 import com.stylingandroid.prism.viewpager.ViewPagerTrigger;
 
@@ -70,9 +70,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager() {
         RainbowPagerAdapter adapter = new RainbowPagerAdapter(this, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-        ColourChangeTrigger trigger = ViewPagerTrigger.newInstance(viewPager, adapter);
-        Prism.newInstance(trigger)
+        Filter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
+        Trigger trigger = ViewPagerTrigger.newInstance(viewPager, adapter);
+        Prism.Builder.newInstance()
+                .add(trigger)
                 .background(appBar)
                 .background(getWindow())
                 .background(navHeader)

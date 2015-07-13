@@ -2,19 +2,19 @@ package com.stylingandroid.prism.setter;
 
 import android.support.annotation.ColorInt;
 
-import com.stylingandroid.prism.ColourSetter;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.Setter;
+import com.stylingandroid.prism.filter.Filter;
 
-public abstract class BaseColourSetter implements ColourSetter {
-    private final ColourFilter filter;
+public abstract class BaseSetter implements Setter {
+    private final Filter filter;
     private final boolean transientChanges;
     private int lastColour = 0;
 
-    protected BaseColourSetter(ColourFilter filter) {
+    protected BaseSetter(Filter filter) {
         this(filter, true);
     }
 
-    protected BaseColourSetter(ColourFilter filter, boolean transientChanges) {
+    protected BaseSetter(Filter filter, boolean transientChanges) {
         this.filter = filter;
         this.transientChanges = transientChanges;
     }

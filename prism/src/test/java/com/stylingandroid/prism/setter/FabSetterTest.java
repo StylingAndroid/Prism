@@ -23,7 +23,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(ColorStateList.class)
-public class FabColourSetterTest {
+public class FabSetterTest {
     @Mock
     private FloatingActionButton floatingActionButton;
     @Mock
@@ -41,17 +41,17 @@ public class FabColourSetterTest {
 
     @Test
     public void givenAFabThenIsFabReturnsTrue() {
-        assertThat(FabColourSetter.isFab(floatingActionButton)).isTrue();
+        assertThat(FabSetter.isFab(floatingActionButton)).isTrue();
     }
 
     @Test
     public void givenAVanillaViewThenIsFabReturnsTrue() {
-        assertThat(FabColourSetter.isFab(vanillaView)).isFalse();
+        assertThat(FabSetter.isFab(vanillaView)).isFalse();
     }
 
     @Test
     public void givenAFabThenTheSetterMethodIsCalledCorrectly() {
-        FabColourSetter fabColourSetter = new FabColourSetter(floatingActionButton, new IdentityFilter());
+        FabSetter fabColourSetter = new FabSetter(floatingActionButton, new IdentityFilter());
         fabColourSetter.setColour(ColourUtils.TEST_COLOUR);
         verify(floatingActionButton, times(1)).setBackgroundTintList(any(ColorStateList.class));
     }

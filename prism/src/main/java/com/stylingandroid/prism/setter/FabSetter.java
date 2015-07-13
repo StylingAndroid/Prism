@@ -4,9 +4,9 @@ import android.content.res.ColorStateList;
 import android.support.annotation.ColorInt;
 import android.view.View;
 
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 
-class FabColourSetter extends BaseColourSetter {
+class FabSetter extends BaseSetter {
     private static final String CLASS_NAME = "android.support.design.widget.FloatingActionButton";
     private static final String METHOD_NAME = "setBackgroundTintList";
     private static final int ALPHA_OPAQUE = 0xFF;
@@ -21,7 +21,7 @@ class FabColourSetter extends BaseColourSetter {
                 && reflectiveCache.hasMethod(view.getClass(), METHOD_NAME, ColorStateList.class);
     }
 
-    public FabColourSetter(View view, ColourFilter filter) {
+    public FabSetter(View view, Filter filter) {
         super(filter);
         methodInvoker = new MethodInvoker<>(view, METHOD_NAME, ColorStateList.class);
     }

@@ -14,11 +14,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.ColourSetter;
 import com.stylingandroid.prism.Prism;
+import com.stylingandroid.prism.Setter;
 import com.stylingandroid.prism.palette.PaletteTrigger;
 
-public class MainActivity extends AppCompatActivity implements ColourSetter {
+public class MainActivity extends AppCompatActivity implements Setter {
     private static final int SELECT_IMAGE = 1;
     private static final String IMAGE_MIME_TYPE = "image/*";
 
@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity implements ColourSetter {
         bodyText = (TextView) findViewById(R.id.body);
 
         paletteTrigger = new PaletteTrigger();
-        Prism.newInstance(paletteTrigger)
+        Prism.Builder.newInstance()
+                .add(paletteTrigger)
                 .background(vibrant, paletteTrigger.getVibrantFilter(paletteTrigger.getColour()))
                 .background(vibrantLight, paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour()))
                 .background(vibrantDark, paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour()))

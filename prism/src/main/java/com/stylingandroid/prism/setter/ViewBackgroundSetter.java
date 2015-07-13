@@ -3,12 +3,12 @@ package com.stylingandroid.prism.setter;
 import android.support.annotation.ColorInt;
 import android.view.View;
 
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 
-class ViewBackgroundColourSetter extends BaseColourSetter {
+class ViewBackgroundSetter extends BaseSetter {
     private final View view;
 
-    public ViewBackgroundColourSetter(View view, ColourFilter filter) {
+    public ViewBackgroundSetter(View view, Filter filter) {
         super(filter);
         this.view = view;
     }

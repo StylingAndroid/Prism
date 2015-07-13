@@ -2,7 +2,7 @@ package com.stylingandroid.prism.filter;
 
 import android.graphics.Color;
 
-public class StatusBarFilter extends RepeatableColourFilter {
+public class StatusBarFilter extends RepeatableFilter {
     private static final int ALPHA = 0x7F;
 
     @Override

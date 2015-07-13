@@ -1,80 +1,125 @@
 package com.stylingandroid.prism;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.StatusBarFilter;
 import com.stylingandroid.prism.setter.ColourSetterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Prism {
-    private static final ColourFilter STATUS_BAR_COLOUR_FILTER = new StatusBarFilter();
-    private final List<ColourSetter> colourSetters;
-    private final ColourChangeTrigger colourChangeTrigger;
+public class Prism implements Setter {
+    private final List<Setter> setters;
+    private final List<Trigger> triggers;
 
-    public static Prism newInstance(@NonNull ColourChangeTrigger colourChangeTrigger) {
-        List<ColourSetter> colourSetters = new ArrayList<>();
-        return new Prism(colourChangeTrigger, colourSetters);
+    Prism(List<Trigger> triggers, List<Setter> setters) {
+        this.triggers = triggers;
+        this.setters = setters;
     }
 
-    public static Prism newInstance() {
-        List<ColourSetter> colourSetters = new ArrayList<>();
-        return new Prism(null, colourSetters);
+    @Override
+    public void setColour(@ColorInt int colour) {
+        setColour(colour, false);
     }
 
-    private Prism(@Nullable ColourChangeTrigger colourChangeTrigger, @NonNull List<ColourSetter> colourSetters) {
-        this.colourChangeTrigger = colourChangeTrigger;
-        this.colourSetters = colourSetters;
-    }
-
-    public Prism background(@NonNull View view) {
-        return background(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
-    }
-
-    public Prism background(@NonNull View view, @NonNull ColourFilter filter) {
-        return add(ColourSetterFactory.getBackgroundSetter(view, filter));
-    }
-
-    public Prism background(@NonNull Window window) {
-        return background(window, STATUS_BAR_COLOUR_FILTER);
-    }
-
-    public Prism background(@NonNull Window window, @NonNull ColourFilter filter) {
-        return add(ColourSetterFactory.getBackgroundSetter(window, filter));
-    }
-
-    public Prism add(@NonNull ColourSetter colourSetter) {
-        colourSetters.add(colourSetter);
-        return this;
-    }
-
-    public Prism text(@NonNull TextView view) {
-        return text(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
-    }
-
-    public Prism text(@NonNull TextView view, @NonNull ColourFilter filter) {
-        return add(ColourSetterFactory.getTextSetter(view, filter));
-    }
-
-    public Prism colour(@NonNull View view) {
-        return colour(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
-    }
-
-    public Prism colour(@NonNull View view, @NonNull ColourFilter filter) {
-        return add(ColourSetterFactory.getColourSetter(view, filter));
-    }
-
-    public ColourSetter build() {
-        Chameleon chameleon = new Chameleon(colourSetters);
-        if (colourChangeTrigger != null) {
-            colourChangeTrigger.addColourSetter(chameleon);
+    @Override
+    public void setColour(@ColorInt int colour, boolean transientChange) {
+        for (Setter setter : setters) {
+            setter.setColour(colour, transientChange);
         }
-        return chameleon;
+    }
+
+    public void add(Trigger trigger) {
+        triggers.add(trigger);
+        trigger.addColourSetter(this);
+    }
+
+    public void remove(Trigger trigger) {
+        trigger.removeColourSetter(this);
+        triggers.remove(trigger);
+    }
+
+    public static final class Builder {
+        private static final Filter STATUS_BAR_COLOUR_FILTER = new StatusBarFilter();
+        private final List<Setter> setters;
+        private final List<Trigger> triggers;
+
+        public static Builder newInstance() {
+            List<Setter> setters = new ArrayList<>();
+            List<Trigger> triggers = new ArrayList<>();
+            return new Builder(triggers, setters);
+        }
+
+        private Builder(@NonNull List<Trigger> triggers, @NonNull List<Setter> setters) {
+            this.triggers = triggers;
+            this.setters = setters;
+        }
+
+        public Builder background(@NonNull View view) {
+            return background(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
+        }
+
+        public Builder background(@NonNull View view, @NonNull Filter filter) {
+            return add(ColourSetterFactory.getBackgroundSetter(view, filter));
+        }
+
+        public Builder background(@NonNull Window window) {
+            return background(window, STATUS_BAR_COLOUR_FILTER);
+        }
+
+        public Builder background(@NonNull Window window, @NonNull Filter filter) {
+            return add(ColourSetterFactory.getBackgroundSetter(window, filter));
+        }
+
+        public Builder add(@NonNull Setter setter) {
+            if (setter != null) {
+                setters.add(setter);
+            }
+            return this;
+        }
+
+        public Builder add(@NonNull Trigger trigger) {
+            if (null != trigger) {
+                triggers.add(trigger);
+            }
+            return this;
+        }
+
+        public Builder text(@NonNull TextView view) {
+            return text(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
+        }
+
+        public Builder text(@NonNull TextView view, @NonNull Filter filter) {
+            return add(ColourSetterFactory.getTextSetter(view, filter));
+        }
+
+        public Builder colour(@NonNull View view) {
+            return colour(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
+        }
+
+        public Builder colour(@NonNull View view, @NonNull Filter filter) {
+            return add(ColourSetterFactory.getColourSetter(view, filter));
+        }
+
+        public Builder color(@NonNull View view) {
+            return colour(view, ColourSetterFactory.IDENTITY_COLOUR_FILTER);
+        }
+
+        public Builder color(@NonNull View view, @NonNull Filter filter) {
+            return colour(view, filter);
+        }
+
+        public Setter build() {
+            Prism prism = new Prism(triggers, setters);
+            for (Trigger trigger : triggers) {
+                trigger.addColourSetter(prism);
+            }
+            return prism;
+        }
     }
 }

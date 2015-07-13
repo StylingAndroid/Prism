@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.ColourSetter;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.Setter;
+import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.IdentityFilter;
 
 import org.junit.After;
@@ -21,15 +21,15 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.when;
 
-public class ColourSetterFactoryTest {
+public class SetterFactoryTest {
     @Mock
     private SetterFactory setterFactory;
 
     @Mock
-    private ColourSetter colourSetter;
+    private Setter setter;
 
     @Mock
-    private ColourSetter windowColourSetter;
+    private Setter windowSetter;
 
     @Mock
     private CustomView customView;
@@ -46,12 +46,12 @@ public class ColourSetterFactoryTest {
     @Mock
     private Window window;
 
-    private ColourFilter identity;
+    private Filter identity;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        when(setterFactory.getColourSetter(isA(CustomView.class), any(ColourFilter.class))).thenReturn(colourSetter);
+        when(setterFactory.getColourSetter(isA(CustomView.class), any(Filter.class))).thenReturn(setter);
         ColourSetterFactory.registerFactory(setterFactory);
         identity = new IdentityFilter();
     }
@@ -63,50 +63,50 @@ public class ColourSetterFactoryTest {
 
     @Test
     public void givenAStandardViewWhenRequestingABackgroundSetterThenAViewBackgroundColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getBackgroundSetter(vanillaView, identity);
-        assertThat(setter).isInstanceOf(ViewBackgroundColourSetter.class);
+        Setter setter = ColourSetterFactory.getBackgroundSetter(vanillaView, identity);
+        assertThat(setter).isInstanceOf(ViewBackgroundSetter.class);
     }
 
     @Test
     public void givenAStandardViewWhenRequestingAColourSetterThenAViewBackgroundColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getColourSetter(vanillaView, identity);
-        assertThat(setter).isInstanceOf(ViewBackgroundColourSetter.class);
+        Setter setter = ColourSetterFactory.getColourSetter(vanillaView, identity);
+        assertThat(setter).isInstanceOf(ViewBackgroundSetter.class);
     }
 
     @Test
     public void givenATextViewWhenRequestingABackgroundSetterThenAViewBackgroundColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getBackgroundSetter(textView, identity);
-        assertThat(setter).isInstanceOf(ViewBackgroundColourSetter.class);
+        Setter setter = ColourSetterFactory.getBackgroundSetter(textView, identity);
+        assertThat(setter).isInstanceOf(ViewBackgroundSetter.class);
     }
 
     @Test
     public void givenATextViewWhenRequestingAColourSetterThenABackgroundColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getColourSetter(textView, identity);
-        assertThat(setter).isInstanceOf(ViewBackgroundColourSetter.class);
+        Setter setter = ColourSetterFactory.getColourSetter(textView, identity);
+        assertThat(setter).isInstanceOf(ViewBackgroundSetter.class);
     }
 
     @Test
     public void givenATextViewWhenRequestingATextSetterThenATextColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getTextSetter(textView, identity);
-        assertThat(setter).isInstanceOf(TextColourSetter.class);
+        Setter setter = ColourSetterFactory.getTextSetter(textView, identity);
+        assertThat(setter).isInstanceOf(TextSetter.class);
     }
 
     @Test
     public void givenAFabViewWhenRequestingAColourSetterThenAFabColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getColourSetter(floatingActionButton, identity);
-        assertThat(setter).isInstanceOf(FabColourSetter.class);
+        Setter setter = ColourSetterFactory.getColourSetter(floatingActionButton, identity);
+        assertThat(setter).isInstanceOf(FabSetter.class);
     }
 
     @Test
     public void givenACustomViewWhenRequestingAColourSetterThenACustomColourSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getColourSetter(customView, identity);
-        assertThat(setter).isEqualTo(colourSetter);
+        Setter setter = ColourSetterFactory.getColourSetter(customView, identity);
+        assertThat(setter).isEqualTo(this.setter);
     }
 
     @Test
     public void givenAWindowRequestingABackgroundSetterThenAStatusBarSetterSetterIsReturned() {
-        ColourSetter setter = ColourSetterFactory.getBackgroundSetter(window, identity);
-        assertThat(setter).isInstanceOf(StatusBarColourSetter.class);
+        Setter setter = ColourSetterFactory.getBackgroundSetter(window, identity);
+        assertThat(setter).isInstanceOf(StatusBarSetter.class);
     }
 
     private class CustomView extends View {

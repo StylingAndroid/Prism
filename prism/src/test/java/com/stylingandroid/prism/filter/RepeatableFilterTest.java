@@ -10,9 +10,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RepeatableColourFilterTest {
+public class RepeatableFilterTest {
     @Mock
-    private RepeatableColourFilter repeatableColourFilter;
+    private RepeatableFilter repeatableColourFilter;
 
     @Before
     public void setup() {

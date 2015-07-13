@@ -5,17 +5,17 @@ import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.view.Window;
 
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 
-class StatusBarColourSetter extends BaseColourSetter {
+class StatusBarSetter extends BaseSetter {
     private final Window window;
     private final int osVersion;
 
-    public StatusBarColourSetter(Window window, ColourFilter filter) {
+    public StatusBarSetter(Window window, Filter filter) {
         this(window, filter, Build.VERSION.SDK_INT);
     }
 
-    StatusBarColourSetter(Window window, ColourFilter filter, int osVersion) {
+    StatusBarSetter(Window window, Filter filter, int osVersion) {
         super(filter);
         this.window = window;
         this.osVersion = osVersion;

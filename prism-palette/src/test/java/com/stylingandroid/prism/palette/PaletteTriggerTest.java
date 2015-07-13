@@ -6,7 +6,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.graphics.PaletteFactory;
 
 import com.stylingandroid.prism.ColourUtils;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,42 +49,42 @@ public class PaletteTriggerTest {
 
     @Test
     public void givenADummyPaletteVibrantColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteLightVibrantColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteDarkVibrantColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getDarkVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getDarkVibrantFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteMutedColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(MUTED);
     }
 
     @Test
     public void givenADummyPaletteLightMutedColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getLightMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getLightMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_MUTED);
     }
 
     @Test
     public void givenADummyPaletteDarkMutedColourIsCorrect() {
-        ColourFilter filter = paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour());
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_MUTED);
     }

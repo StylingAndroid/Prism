@@ -2,7 +2,7 @@ package com.stylingandroid.prism.filter;
 
 import android.graphics.Color;
 
-public class ShadeFilter extends RepeatableColourFilter {
+public class ShadeFilter extends RepeatableFilter {
     private static final float DEFAULT_SHADE_FACTOR = 0.2f;
     private final float shadeFactor;
 

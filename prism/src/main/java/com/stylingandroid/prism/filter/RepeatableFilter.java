@@ -1,10 +1,10 @@
 package com.stylingandroid.prism.filter;
 
-public abstract class RepeatableColourFilter implements ColourFilter {
+public abstract class RepeatableFilter implements Filter {
     private int lastInput = 0;
     private int lastOutput;
 
-    public RepeatableColourFilter() {
+    public RepeatableFilter() {
         lastOutput = onFilter(lastInput);
     }
 

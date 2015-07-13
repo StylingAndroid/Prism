@@ -4,15 +4,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.ColourSetter;
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.Setter;
+import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.IdentityFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ColourSetterFactory {
-    public static final ColourFilter IDENTITY_COLOUR_FILTER = new IdentityFilter();
+    public static final Filter IDENTITY_COLOUR_FILTER = new IdentityFilter();
     private static final List<SetterFactory> FACTORIES = new ArrayList<>();
 
     private ColourSetterFactory() {
@@ -27,39 +27,39 @@ public final class ColourSetterFactory {
         FACTORIES.remove(factory);
     }
 
-    public static ColourSetter getBackgroundSetter(View view, ColourFilter filter) {
-        if (FabColourSetter.isFab(view)) {
-            return new FabColourSetter(view, getSafeColourFilter(filter));
+    public static Setter getBackgroundSetter(View view, Filter filter) {
+        if (FabSetter.isFab(view)) {
+            return new FabSetter(view, getSafeColourFilter(filter));
         }
-        return new ViewBackgroundColourSetter(view, getSafeColourFilter(filter));
+        return new ViewBackgroundSetter(view, getSafeColourFilter(filter));
     }
 
-    public static ColourSetter getBackgroundSetter(Window window, ColourFilter filter) {
-        return new StatusBarColourSetter(window, getSafeColourFilter(filter));
+    public static Setter getBackgroundSetter(Window window, Filter filter) {
+        return new StatusBarSetter(window, getSafeColourFilter(filter));
     }
 
-    public static ColourSetter getTextSetter(TextView view, ColourFilter filter) {
-        return new TextColourSetter(view, getSafeColourFilter(filter));
+    public static Setter getTextSetter(TextView view, Filter filter) {
+        return new TextSetter(view, getSafeColourFilter(filter));
     }
 
-    public static ColourSetter getColourSetter(View view, ColourFilter filter) {
-        ColourSetter setter = null;
+    public static Setter getColourSetter(View view, Filter filter) {
+        Setter setter = null;
         for (SetterFactory factory : FACTORIES) {
             setter = factory.getColourSetter(view, getSafeColourFilter(filter));
         }
         if (setter == null) {
-            if (FabColourSetter.isFab(view)) {
-                setter = new FabColourSetter(view, getSafeColourFilter(filter));
+            if (FabSetter.isFab(view)) {
+                setter = new FabSetter(view, getSafeColourFilter(filter));
             } else {
-                setter = new ViewBackgroundColourSetter(view, getSafeColourFilter(filter));
+                setter = new ViewBackgroundSetter(view, getSafeColourFilter(filter));
             }
         }
         return setter;
     }
 
-    private static ColourFilter getSafeColourFilter(ColourFilter colourFilter) {
-        if (colourFilter != null) {
-            return colourFilter;
+    private static Filter getSafeColourFilter(Filter filter) {
+        if (filter != null) {
+            return filter;
         }
         return IDENTITY_COLOUR_FILTER;
     }

@@ -2,7 +2,7 @@ package com.stylingandroid.prism;
 
 import android.support.annotation.ColorInt;
 
-public interface ColourSetter {
+public interface Setter {
     void setColour(@ColorInt int colour);
 
     void setColour(@ColorInt int colour, boolean isTransient);

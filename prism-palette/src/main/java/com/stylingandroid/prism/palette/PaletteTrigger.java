@@ -5,15 +5,15 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.graphics.Palette;
 
-import com.stylingandroid.prism.BaseColourChangeTrigger;
-import com.stylingandroid.prism.ColourChangeTrigger;
-import com.stylingandroid.prism.filter.ColourFilter;
-import com.stylingandroid.prism.filter.CompoundColourFilter;
-import com.stylingandroid.prism.filter.GenericColourFilter;
+import com.stylingandroid.prism.BaseTrigger;
+import com.stylingandroid.prism.Trigger;
+import com.stylingandroid.prism.filter.Filter;
+import com.stylingandroid.prism.filter.CompoundFilter;
+import com.stylingandroid.prism.filter.GenericFilter;
 
 import java.lang.ref.WeakReference;
 
-public class PaletteTrigger extends BaseColourChangeTrigger implements ColourChangeTrigger {
+public class PaletteTrigger extends BaseTrigger implements Trigger {
     private Palette palette;
 
     public PaletteTrigger() {
@@ -23,39 +23,39 @@ public class PaletteTrigger extends BaseColourChangeTrigger implements ColourCha
         new Palette.Builder(bitmap).generate(listener);
     }
 
-    public ColourFilter getVibrantFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new VibrantFilter(this), nextFilter);
+    public Filter getVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new VibrantFilter(this), nextFilter);
     }
 
-    public ColourFilter getLightVibrantFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new LightVibrantFilter(this), nextFilter);
+    public Filter getLightVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new LightVibrantFilter(this), nextFilter);
     }
 
-    public ColourFilter getDarkVibrantFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new DarkVibrantFilter(this), nextFilter);
+    public Filter getDarkVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new DarkVibrantFilter(this), nextFilter);
     }
 
-    public ColourFilter getMutedFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new MutedFilter(this), nextFilter);
+    public Filter getMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new MutedFilter(this), nextFilter);
     }
 
-    public ColourFilter getLightMutedFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new LightMutedFilter(this), nextFilter);
+    public Filter getLightMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new LightMutedFilter(this), nextFilter);
     }
 
-    public ColourFilter getDarkMutedFilter(GenericColourFilter<Palette.Swatch, Integer> nextFilter) {
-        return new CompoundColourFilter<>(new DarkMutedFilter(this), nextFilter);
+    public Filter getDarkMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
+        return new CompoundFilter<>(new DarkMutedFilter(this), nextFilter);
     }
 
-    public GenericColourFilter<Palette.Swatch, Integer> getColour() {
+    public GenericFilter<Palette.Swatch, Integer> getColour() {
         return rgbColour;
     }
 
-    public GenericColourFilter<Palette.Swatch, Integer> getTitleTextColour() {
+    public GenericFilter<Palette.Swatch, Integer> getTitleTextColour() {
         return titleTextColour;
     }
 
-    public GenericColourFilter<Palette.Swatch, Integer> getBodyTextColour() {
+    public GenericFilter<Palette.Swatch, Integer> getBodyTextColour() {
         return bodyTextColour;
     }
 
@@ -66,7 +66,7 @@ public class PaletteTrigger extends BaseColourChangeTrigger implements ColourCha
         }
     };
 
-    private abstract static class BasePaletteFilter implements GenericColourFilter<Integer, Palette.Swatch> {
+    private abstract static class BasePaletteFilter implements GenericFilter<Integer, Palette.Swatch> {
         private final WeakReference<PaletteTrigger> parentWeakReference;
 
         protected BasePaletteFilter(PaletteTrigger parent) {
@@ -159,7 +159,7 @@ public class PaletteTrigger extends BaseColourChangeTrigger implements ColourCha
         }
     }
 
-    private GenericColourFilter<Palette.Swatch, Integer> rgbColour = new GenericColourFilter<Palette.Swatch, Integer>() {
+    private GenericFilter<Palette.Swatch, Integer> rgbColour = new GenericFilter<Palette.Swatch, Integer>() {
         @Override
         public Integer filter(Palette.Swatch colour) {
             if (colour == null) {
@@ -169,7 +169,7 @@ public class PaletteTrigger extends BaseColourChangeTrigger implements ColourCha
         }
     };
 
-    private GenericColourFilter<Palette.Swatch, Integer> titleTextColour = new GenericColourFilter<Palette.Swatch, Integer>() {
+    private GenericFilter<Palette.Swatch, Integer> titleTextColour = new GenericFilter<Palette.Swatch, Integer>() {
         @Override
         public Integer filter(Palette.Swatch colour) {
             if (colour == null) {
@@ -179,7 +179,7 @@ public class PaletteTrigger extends BaseColourChangeTrigger implements ColourCha
         }
     };
 
-    private GenericColourFilter<Palette.Swatch, Integer> bodyTextColour = new GenericColourFilter<Palette.Swatch, Integer>() {
+    private GenericFilter<Palette.Swatch, Integer> bodyTextColour = new GenericFilter<Palette.Swatch, Integer>() {
         @Override
         public Integer filter(Palette.Swatch colour) {
             if (colour == null) {

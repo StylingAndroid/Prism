@@ -1,6 +1,6 @@
 package com.stylingandroid.prism.setter;
 
-import android.view.View;
+import android.widget.TextView;
 
 import com.stylingandroid.prism.ColourUtils;
 import com.stylingandroid.prism.filter.IdentityFilter;
@@ -14,21 +14,22 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 
-public class ViewBackgroundColourSetterTest {
+public class TextSetterTest {
     @Mock
-    private View view;
+    private TextView textView;
 
-    private ViewBackgroundColourSetter backgroundColourSetter;
+    private TextSetter textColourSetter;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        backgroundColourSetter = new ViewBackgroundColourSetter(view, new IdentityFilter());
+        textColourSetter = new TextSetter(textView, new IdentityFilter());
     }
 
     @Test
     public void givenAViewThenSetBackgroundColorIsCalled() {
-        backgroundColourSetter.setColour(ColourUtils.TEST_COLOUR);
-        verify(view, atLeast(1)).setBackgroundColor(anyInt());
+        textColourSetter.setColour(ColourUtils.TEST_COLOUR);
+        verify(textView, atLeast(1)).setTextColor(anyInt());
     }
+
 }

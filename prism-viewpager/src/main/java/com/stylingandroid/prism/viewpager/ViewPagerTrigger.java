@@ -2,11 +2,11 @@ package com.stylingandroid.prism.viewpager;
 
 import android.support.v4.view.ViewPager;
 
-import com.stylingandroid.prism.BaseColourChangeTrigger;
-import com.stylingandroid.prism.ColourSetter;
+import com.stylingandroid.prism.BaseTrigger;
+import com.stylingandroid.prism.Setter;
 import com.stylingandroid.prism.setter.ViewPagerColourSetterFactory;
 
-public class ViewPagerTrigger extends BaseColourChangeTrigger implements ViewPager.OnPageChangeListener {
+public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageChangeListener {
     private final ColourProvider colourProvider;
     private ColourAnimator colourAnimator;
     private int currentPosition;
@@ -73,9 +73,9 @@ public class ViewPagerTrigger extends BaseColourChangeTrigger implements ViewPag
     }
 
     @Override
-    public void addColourSetter(ColourSetter colourSetter) {
+    public void addColourSetter(Setter setter) {
         boolean shouldInitialise = hasNoColourSetters();
-        super.addColourSetter(colourSetter);
+        super.addColourSetter(setter);
         if (shouldInitialise) {
             int newColour = colourProvider.getColour(currentPosition);
             setColour(newColour, false);

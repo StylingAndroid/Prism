@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.setter.StatusBarColourSetterAccessor;
+import com.stylingandroid.prism.setter.StatusBarSetterAccessor;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,9 +28,9 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Color.class, ColorStateList.class})
-public class PrismTest {
+public class BuilderTest {
     @Mock
-    private ColourChangeTrigger colourChangeTrigger;
+    private Trigger trigger;
 
     @Mock
     private View view;
@@ -59,7 +59,7 @@ public class PrismTest {
     @Test
     public void givenNoTriggerThenPrismCreationDoesNotNPE() {
         try {
-            Prism.newInstance().build();
+            Prism.Builder.newInstance().build();
         } catch (Exception e) {
             Assert.fail();
         }
@@ -67,22 +67,22 @@ public class PrismTest {
 
     @Test
     public void givenANonNullTriggerThenPrismCreationSetsTheTriggerCorrectly() {
-        Prism.newInstance(colourChangeTrigger).build();
-        verify(colourChangeTrigger, atLeastOnce()).addColourSetter(any(ColourSetter.class));
+        Prism.Builder.newInstance().add(trigger).build();
+        verify(trigger, atLeastOnce()).addColourSetter(any(Setter.class));
     }
 
     @Test
     public void givenAVanillaViewThenBackgroundSetsTheBackgroundColour() {
-        ColourSetter colourSetter = Prism.newInstance(colourChangeTrigger).background(view).build();
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = Prism.Builder.newInstance().add(trigger).background(view).build();
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(view, atLeastOnce()).setBackgroundColor(ColourUtils.TEST_COLOUR);
     }
 
     @Test
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void givenAWindowOnLollipopThenSetColourSetsTheStatusBarColour() {
-        StatusBarColourSetterAccessor setter = StatusBarColourSetterAccessor.newInstance(window, Build.VERSION_CODES.LOLLIPOP);
-        ColourSetter colourSetter = Prism.newInstance(colourChangeTrigger).add(setter).build();
+        StatusBarSetterAccessor setter = StatusBarSetterAccessor.newInstance(window, Build.VERSION_CODES.LOLLIPOP);
+        Setter colourSetter = Prism.Builder.newInstance().add(trigger).add(setter).build();
         colourSetter.setColour(ColourUtils.TEST_COLOUR);
         verify(window, atLeastOnce()).setStatusBarColor(ColourUtils.TEST_COLOUR);
     }
@@ -90,38 +90,47 @@ public class PrismTest {
     @Test
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void givenAWindowOnPreLollipopThenSetColourDoesNotSetTheStatusBarColour() {
-        ColourSetter colourSetter = Prism.newInstance(colourChangeTrigger).background(window).build();
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = Prism.Builder.newInstance().add(trigger).background(window).build();
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(window, never()).setStatusBarColor(ColourUtils.TEST_COLOUR);
     }
 
     @Test
     public void givenATextViewThenSetColourSetsTheTextColour() {
-        ColourSetter colourSetter = Prism.newInstance(colourChangeTrigger).text(textView).build();
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = Prism.Builder.newInstance().add(trigger).text(textView).build();
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(textView, atLeastOnce()).setTextColor(ColourUtils.TEST_COLOUR);
     }
 
     @Test
     public void givenAFABThenSetColourSetsTheTintColour() {
-        ColourSetter colourSetter = Prism.newInstance(colourChangeTrigger).colour(floatingActionButton).build();
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = Prism.Builder.newInstance().add(trigger).colour(floatingActionButton).build();
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(floatingActionButton, atLeastOnce()).setBackgroundTintList(any(ColorStateList.class));
     }
 
     @Test
     public void givenANullViewThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance().background((View) null).build();
+            Prism.Builder.newInstance().background((View) null).build();
         } catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void givenANullColourSetterThenCreatingABuilderDoesNotThrowAnNpe() {
+    public void givenANullSetterThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance().add(null).build();
+            Prism.Builder.newInstance().add((Setter) null).build();
+        } catch (Exception e) {
+            Assert.fail();
+        }
+    }
+
+    @Test
+    public void givenANullTriggerThenCreatingABuilderDoesNotThrowAnNpe() {
+        try {
+            Prism.Builder.newInstance().add((Trigger) null).build();
         } catch (Exception e) {
             Assert.fail();
         }
@@ -130,7 +139,7 @@ public class PrismTest {
     @Test
     public void givenANullFilterThenCreatingABuilderDoesNotThrowAnNpe() {
         try {
-            Prism.newInstance().background(view, null).build();
+            Prism.Builder.newInstance().background(view, null).build();
         } catch (Exception e) {
             Assert.fail();
         }

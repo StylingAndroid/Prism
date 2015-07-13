@@ -2,7 +2,7 @@ package com.stylingandroid.prism.filter;
 
 import android.graphics.Color;
 
-public class TintFilter extends RepeatableColourFilter {
+public class TintFilter extends RepeatableFilter {
     private static final float DEFAULT_TINT_FACTOR = 0.2f;
     private static final int HEX_FF = 0xFF;
     private final float tintFactor;

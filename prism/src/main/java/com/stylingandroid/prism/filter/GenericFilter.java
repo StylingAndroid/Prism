@@ -1,5 +1,5 @@
 package com.stylingandroid.prism.filter;
 
-public interface GenericColourFilter<INPUT, OUTPUT> {
+public interface GenericFilter<INPUT, OUTPUT> {
     OUTPUT filter(INPUT colour);
 }

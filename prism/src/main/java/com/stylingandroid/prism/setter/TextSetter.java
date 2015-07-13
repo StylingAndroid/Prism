@@ -3,12 +3,12 @@ package com.stylingandroid.prism.setter;
 import android.support.annotation.ColorInt;
 import android.widget.TextView;
 
-import com.stylingandroid.prism.filter.ColourFilter;
+import com.stylingandroid.prism.filter.Filter;
 
-public class TextColourSetter extends BaseColourSetter {
+public class TextSetter extends BaseSetter {
     private final TextView view;
 
-    public TextColourSetter(TextView view, ColourFilter filter) {
+    public TextSetter(TextView view, Filter filter) {
         super(filter);
         this.view = view;
     }

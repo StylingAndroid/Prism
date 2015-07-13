@@ -4,7 +4,7 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.view.Window;
 
-import com.stylingandroid.prism.ColourSetter;
+import com.stylingandroid.prism.Setter;
 import com.stylingandroid.prism.ColourUtils;
 import com.stylingandroid.prism.filter.IdentityFilter;
 
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-public class StatusBarColourSetterTest {
+public class StatusBarSetterTest {
     @Mock
     private Window window;
 
@@ -30,15 +30,15 @@ public class StatusBarColourSetterTest {
 
     @Test
     public void givenAWindowOnLollipopOrLaterThenTheSetterMethodIsCalledCorrectly() {
-        ColourSetter colourSetter = new StatusBarColourSetter(window, new IdentityFilter(), Build.VERSION_CODES.LOLLIPOP);
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = new StatusBarSetter(window, new IdentityFilter(), Build.VERSION_CODES.LOLLIPOP);
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(window, atLeast(1)).setStatusBarColor(anyInt());
     }
 
     @Test
     public void givenAWindowPreLollipopThenTheSetterMethodIsNotCalled() {
-        ColourSetter colourSetter = new StatusBarColourSetter(window, new IdentityFilter());
-        colourSetter.setColour(ColourUtils.TEST_COLOUR);
+        Setter setter = new StatusBarSetter(window, new IdentityFilter());
+        setter.setColour(ColourUtils.TEST_COLOUR);
         verify(window, never()).setStatusBarColor(anyInt());
     }
 }
