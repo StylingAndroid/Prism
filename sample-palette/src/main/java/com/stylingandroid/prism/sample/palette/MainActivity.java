@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements Setter {
 
     @Override
     protected void onDestroy() {
-        if (prism!= null) {
+        if (prism != null) {
             prism.destroy();
         }
         super.onDestroy();
