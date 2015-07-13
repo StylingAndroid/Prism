@@ -13,7 +13,7 @@ import com.stylingandroid.prism.setter.ColourSetterFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Prism implements Setter {
+public class Prism implements Setter, ColorSetter {
     private final List<Setter> setters;
     private final List<Trigger> triggers;
 
@@ -32,6 +32,16 @@ public class Prism implements Setter {
         for (Setter setter : setters) {
             setter.setColour(colour, transientChange);
         }
+    }
+
+    @Override
+    public void setColor(@ColorInt int color) {
+        setColour(color);
+    }
+
+    @Override
+    public void setColor(@ColorInt int color, boolean transientChanges) {
+        setColour(color, transientChanges);
     }
 
     public void add(Trigger trigger) {
@@ -86,6 +96,13 @@ public class Prism implements Setter {
         public Builder add(@NonNull Setter setter) {
             if (setter != null) {
                 setters.add(setter);
+            }
+            return this;
+        }
+
+        public Builder add(@NonNull ColorSetter setter) {
+            if (setter != null) {
+                setters.add(new SetterAdapter(setter));
             }
             return this;
         }

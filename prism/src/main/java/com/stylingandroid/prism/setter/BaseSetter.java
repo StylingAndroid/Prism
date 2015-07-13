@@ -19,6 +19,7 @@ public abstract class BaseSetter implements Setter {
         this.transientChanges = transientChanges;
     }
 
+    @Override
     public final void setColour(@ColorInt int colour) {
         if (colour != lastColour) {
             lastColour = colour;
@@ -26,6 +27,7 @@ public abstract class BaseSetter implements Setter {
         }
     }
 
+    @Override
     public final void setColour(@ColorInt int colour, boolean isTransient) {
         if (!isTransient || transientChanges) {
             setColour(colour);

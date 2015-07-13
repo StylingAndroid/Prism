@@ -37,10 +37,10 @@ degrade gracefully (no crashing!) so you can safely use it and allow the setter 
 
 The standard setters built in to Prism are:
 
-* `FabColourSetter(FloatingActionButton fab)` - sets the background tint colour on the design support library implementation of _FloatingActionButton_
+* `FabSetter(FloatingActionButton fab)` - sets the background tint colour on the design support library implementation of _FloatingActionButton_
 * `StatusBarSetter(Window window)` - sets the status bar colour on the supplied Window. Note that this does not take a _View_.
-* `TextColourSetter(TextView textView)` - sets the text colour on the supplied _TextView_.
-* `ViewBackgroundColourSetter(View view)` - sets the background colour of the supplied _View_.
+* `TextSetter(TextView textView)` - sets the text colour on the supplied _TextView_.
+* `ViewBackgroundSetter(View view)` - sets the background colour of the supplied _View_.
 
 Of course you can create your own _Setters_ for custom _Views_ which may require have additional components which can be coloured, and you can create
 multiple _Setters_ for a single _View_ to sett different attributes and add them all to the Prism to colour multiple components simultaneously.
@@ -94,7 +94,7 @@ private TextView textView;
 private FloatingActionButton fab;
 private AppBarLayout appBar;
 
-private ColourSetter prism;
+private Prism prism;
 
 @Override
 protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +108,21 @@ protected void onCreate(Bundle savedInstanceState) {
 
     setSupportActionBar(toolbar);
 
-    ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-    prism = Prism.newInstance()
+    Filter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
+    prism = Prism.Builder.newInstance()
         .background(appBar)
         .background(getWindow())
         .text(tetView)
         .background(fab, tint)
         .build();
+}
+
+@Override
+protected void onDestroy() {
+    if (prism != null) {
+        prism.destroy();
+    }
+    super.onDestroy();
 }
 ```
 
@@ -134,6 +142,14 @@ So that's quite a neat way of connecting up some colour changing behaviours but 
 from having to implement a lot of boilerplate code to do the same thing. However when we add a _Trigger_ in to the mix we really start seeing some
 impressive behaviour for very little extra work. I would urge you to take a look at the _ViewPagerTrigger_ documentation below to really see this
 in action.
+
+#Colour vs. Color
+As you may have guessed from the spelling of the word 'colour' throughout this readme I am English and prefer to use the English spelling of 'colour'.
+I am fully aware that there are many people who spell it 'color'. In order to give people the freedom to use whichever spelling they
+prefer, Prism will accept *both* spellings. So you can call `setColor(int color)` in place of `setColour(int colour)` if you prefer. However, using
+the English spelling of 'colour' will be very slightly better performance because there will be one less method call as internally
+`setColor(int color)` simply calls `setColour(int colour)`. So if you chose to spell 'colour' incorrectly you will suffer a very minor performance
+hit!
 
 #Prism ViewPager
 [ ![Download](https://api.bintray.com/packages/stylingandroid/maven/prism-viewpager/images/download.svg) ](https://bintray.com/stylingandroid/maven/prism-viewpager/_latestVersion)
@@ -169,7 +185,7 @@ a colour value for each page within the _ViewPager_ and changing pages will then
 Hooking this up is really easy:
 
 ```java
-public ColourChangeTrigger getTrigger(ViewPager viewPager, PagerAdapter pagerAdapter) {
+public Trigger getTrigger(ViewPager viewPager, PagerAdapter pagerAdapter) {
     if (pagerAdapter instanceof ColourProvider) {
         return ViewPagerTrigger(viewPager, (ColourProvider)pagerAdapter);
     }
@@ -177,11 +193,14 @@ public ColourChangeTrigger getTrigger(ViewPager viewPager, PagerAdapter pagerAda
 }
 ```
 
+For those that chose an alternative spelling of 'colour' you can implement the `ColorProvider` interface instead. You'll need to change `getTrigger()`
+accordingly, but this will get wrapped inside an Adapter class internally so, once again, there is a minor performance hit for doing this.
+
 You can now use this when building a _Prism_ instance:
 
 ```java
     ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-    ColourSetter prism = Prism.newInstance(getTrigger(viewPager, pagerAdapter))
+    Prism prism = Prism.newInstance(getTrigger(viewPager, pagerAdapter))
         .background(appBar)
         .background(getWindow())
         .text(tetView)
@@ -198,8 +217,8 @@ This is built in to the palette-viewpager library. Whenever you create a _Prism_
 _ViewPagerGlowFactory_ with Prism, so the following code will automatically create overscroll glow colouring on your _ViewPager_:
 
 ```java
-    ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-    ColourSetter prism = Prism.newInstance(getTrigger(viewPager, pagerAdapter))
+    Filter tint = new Filter(TINT_FACTOR_50_PERCENT);
+    ColourSetter prism = Prism.newInstance().add(getTrigger(viewPager, pagerAdapter))
         .colour(viewPager, tint)
         .build();
 ```
@@ -207,9 +226,9 @@ _ViewPagerGlowFactory_ with Prism, so the following code will automatically crea
 If you're not using a _ViewPagerTrigger_ it's pretty easy to manually create the _ViewPagerGlowSetter_:
 
 ```java
-    ColourFilter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
-    ColourSetter glowSetter = GlowColourSetter.newInstance(viewPager, tint);
-    ColourSetter prism = Prism.newInstance(someOtherTrigger)
+    Filter tint = new TintFilter(TINT_FACTOR_50_PERCENT);
+    Setter glowSetter = ViewPagerGlowSetter.newInstance(viewPager, tint);
+    Prism prism = Prism.newInstance().add(someOtherTrigger)
         .add(glowSetter)
         .build();
 ```

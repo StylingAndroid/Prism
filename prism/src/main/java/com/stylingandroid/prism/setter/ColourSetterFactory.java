@@ -29,35 +29,39 @@ public final class ColourSetterFactory {
 
     public static Setter getBackgroundSetter(View view, Filter filter) {
         if (FabSetter.isFab(view)) {
-            return new FabSetter(view, getSafeColourFilter(filter));
+            return new FabSetter(view, getNullSafeFilter(filter));
         }
-        return new ViewBackgroundSetter(view, getSafeColourFilter(filter));
+        return new ViewBackgroundSetter(view, getNullSafeFilter(filter));
     }
 
     public static Setter getBackgroundSetter(Window window, Filter filter) {
-        return new StatusBarSetter(window, getSafeColourFilter(filter));
+        return new StatusBarSetter(window, getNullSafeFilter(filter));
     }
 
     public static Setter getTextSetter(TextView view, Filter filter) {
-        return new TextSetter(view, getSafeColourFilter(filter));
+        return new TextSetter(view, getNullSafeFilter(filter));
     }
 
     public static Setter getColourSetter(View view, Filter filter) {
         Setter setter = null;
         for (SetterFactory factory : FACTORIES) {
-            setter = factory.getColourSetter(view, getSafeColourFilter(filter));
+            setter = factory.getColourSetter(view, getNullSafeFilter(filter));
         }
         if (setter == null) {
             if (FabSetter.isFab(view)) {
-                setter = new FabSetter(view, getSafeColourFilter(filter));
+                setter = new FabSetter(view, getNullSafeFilter(filter));
             } else {
-                setter = new ViewBackgroundSetter(view, getSafeColourFilter(filter));
+                setter = new ViewBackgroundSetter(view, getNullSafeFilter(filter));
             }
         }
         return setter;
     }
 
-    private static Filter getSafeColourFilter(Filter filter) {
+    public static Setter getColorSetter(View view, Filter filter) {
+        return getColourSetter(view, filter);
+    }
+
+    private static Filter getNullSafeFilter(Filter filter) {
         if (filter != null) {
             return filter;
         }
