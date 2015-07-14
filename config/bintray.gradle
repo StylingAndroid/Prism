@@ -35,6 +35,7 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     dryRun = bintrayDryRun
+    publish = true
 
     configurations = ['archives']
     pkg {
