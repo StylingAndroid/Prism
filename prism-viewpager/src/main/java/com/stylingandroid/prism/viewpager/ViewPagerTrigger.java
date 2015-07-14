@@ -20,6 +20,7 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
         ViewPagerTrigger viewPagerTrigger = new ViewPagerTrigger(colourProvider);
         viewPager.addOnPageChangeListener(viewPagerTrigger);
         viewPagerTrigger.onPageSelected(0);
+        ViewPagerSetterFactory.register();
         return viewPagerTrigger;
     }
 
