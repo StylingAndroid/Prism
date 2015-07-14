@@ -1,0 +1,12 @@
+<resources>
+
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Base.AppTheme" />
+
+  <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/sa_green</item>
+    <item name="colorAccent">@color/sa_accent</item>
+    <item name="colorControlHighlight">@color/sa_green_transparent</item>
+  </style>
+
+</resources>
