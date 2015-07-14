@@ -31,7 +31,7 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         boolean transientChange = true;
-        if (colourAnimator != null && colourAnimator.isOutsideRange(position)) {
+        if (colourAnimator != null && colourAnimator.isOutsideRange(position, positionOffset)) {
             colourAnimator = null;
         }
         if (colourAnimator == null) {

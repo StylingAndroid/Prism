@@ -41,7 +41,7 @@ class ColourAnimator {
         return (int) ARGB_EVALUATOR.evaluate(offset, startColour, endColour);
     }
 
-    public boolean isOutsideRange(int position) {
-        return position < startColour || position > endColour;
+    public boolean isOutsideRange(int position, float offset) {
+        return position < startPosition || (position == endPosition && offset > 0f) || position > endPosition;
     }
 }
