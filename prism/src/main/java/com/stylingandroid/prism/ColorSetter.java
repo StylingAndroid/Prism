@@ -5,5 +5,5 @@ import android.support.annotation.ColorInt;
 public interface ColorSetter {
     void setColor(@ColorInt int color);
 
-    void setColor(@ColorInt int color, boolean isTransient);
+    void setTransientColor(@ColorInt int color);
 }

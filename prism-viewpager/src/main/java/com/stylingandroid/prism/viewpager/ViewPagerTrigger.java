@@ -51,7 +51,11 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
             newColour = colourProvider.getColour(position);
             transientChange = false;
         }
-        setColour(newColour, transientChange);
+        if (transientChange) {
+            setTransientColour(newColour);
+        } else {
+            setColour(newColour);
+        }
     }
 
     private boolean isScrollingRight(int position) {
@@ -62,7 +66,7 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_IDLE && colourAnimator != null) {
             int newColour = colourProvider.getColour(currentPosition);
-            setColour(newColour, false);
+            setColour(newColour);
             colourAnimator = null;
         }
     }
@@ -84,7 +88,7 @@ public class ViewPagerTrigger extends BaseTrigger implements ViewPager.OnPageCha
         if (shouldInitialise) {
             ViewPagerSetterFactory.register();
             int newColour = colourProvider.getColour(currentPosition);
-            setColour(newColour, false);
+            setColour(newColour);
         }
     }
 

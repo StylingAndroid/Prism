@@ -195,7 +195,7 @@ public class PaletteTrigger extends BaseTrigger implements Trigger {
 
     void setPalette(Palette palette) {
         this.palette = palette;
-        setColour(palette.getVibrantColor(0), false);
+        setColour(palette.getVibrantColor(0));
     }
 
 }

@@ -22,28 +22,28 @@ public class BaseSetterTest {
     @Test
     public void givenATransientColourSetterTransientEventsAreHandled() {
         TransientSetter colourSetter = new TransientSetter(identityFilter);
-        colourSetter.setColour(ColourUtils.TEST_COLOUR, true);
+        colourSetter.setTransientColour(ColourUtils.TEST_COLOUR);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 
     @Test
     public void givenATransientColourSetterNonTransientEventsAreHandled() {
         TransientSetter colourSetter = new TransientSetter(identityFilter);
-        colourSetter.setColour(ColourUtils.TEST_COLOUR, false);
+        colourSetter.setColour(ColourUtils.TEST_COLOUR);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 
     @Test
     public void givenANonTransientColourSetterTransientEventsAreNotHandled() {
         NonTransientSetter colourSetter = new NonTransientSetter(identityFilter);
-        colourSetter.setColour(ColourUtils.TEST_COLOUR, true);
+        colourSetter.setTransientColour(ColourUtils.TEST_COLOUR);
         assertThat(colourSetter.onSetColourCalled).isFalse();
     }
 
     @Test
     public void givenANonTransientColourSetterNonTransientEventsAreHandled() {
         NonTransientSetter colourSetter = new NonTransientSetter(identityFilter);
-        colourSetter.setColour(ColourUtils.TEST_COLOUR, false);
+        colourSetter.setColour(ColourUtils.TEST_COLOUR);
         assertThat(colourSetter.onSetColourCalled).isTrue();
     }
 

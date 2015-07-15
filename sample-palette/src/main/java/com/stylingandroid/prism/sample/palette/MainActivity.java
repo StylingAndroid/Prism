@@ -140,16 +140,16 @@ public class MainActivity extends AppCompatActivity implements Setter {
 
     @Override
     public void setColour(@ColorInt int colour) {
-        setColour(colour, false);
-    }
-
-    @Override
-    public void setColour(@ColorInt int colour, boolean isTransient) {
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
             titleText.setVisibility(View.VISIBLE);
             bodyText.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void setTransientColour(@ColorInt int colour) {
+        //NO-OP
     }
 }

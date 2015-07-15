@@ -28,8 +28,8 @@ public abstract class BaseSetter implements Setter {
     }
 
     @Override
-    public final void setColour(@ColorInt int colour, boolean isTransient) {
-        if (!isTransient || transientChanges) {
+    public final void setTransientColour(@ColorInt int colour) {
+        if (transientChanges) {
             setColour(colour);
         }
     }

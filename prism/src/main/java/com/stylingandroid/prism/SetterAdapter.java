@@ -15,7 +15,7 @@ public class SetterAdapter implements Setter {
     }
 
     @Override
-    public void setColour(@ColorInt int colour, boolean isTransient) {
-        colorSetter.setColor(colour, isTransient);
+    public void setTransientColour(@ColorInt int colour) {
+        colorSetter.setTransientColor(colour);
     }
 }

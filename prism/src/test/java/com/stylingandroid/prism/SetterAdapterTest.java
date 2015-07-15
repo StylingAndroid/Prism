@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -30,7 +29,7 @@ public class SetterAdapterTest {
 
     @Test
     public void givenAColourSetterWrappedInASetterAdapterThenTransientSetColorIsCalled() {
-        setter.setColour(1, true);
-        verify(colorSetter, atLeastOnce()).setColor(anyInt(), anyBoolean());
+        setter.setTransientColour(1);
+        verify(colorSetter, atLeastOnce()).setTransientColor(anyInt());
     }
 }

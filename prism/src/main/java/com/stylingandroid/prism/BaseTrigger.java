@@ -23,12 +23,14 @@ public class BaseTrigger implements Trigger {
     }
 
     protected void setColour(@ColorInt int colour) {
-       setColour(colour, false);
+        for (Setter setter : setters) {
+            setter.setColour(colour);
+        }
     }
 
-    protected void setColour(@ColorInt int colour, boolean transientChange) {
+    protected void setTransientColour(@ColorInt int colour) {
         for (Setter setter : setters) {
-            setter.setColour(colour, transientChange);
+            setter.setTransientColour(colour);
         }
     }
 }

@@ -24,13 +24,15 @@ public class Prism implements Setter, ColorSetter {
 
     @Override
     public void setColour(@ColorInt int colour) {
-        setColour(colour, false);
+        for (Setter setter : setters) {
+            setter.setColour(colour);
+        }
     }
 
     @Override
-    public void setColour(@ColorInt int colour, boolean transientChange) {
+    public void setTransientColour(@ColorInt int colour) {
         for (Setter setter : setters) {
-            setter.setColour(colour, transientChange);
+            setter.setTransientColour(colour);
         }
     }
 
@@ -40,8 +42,8 @@ public class Prism implements Setter, ColorSetter {
     }
 
     @Override
-    public void setColor(@ColorInt int color, boolean transientChanges) {
-        setColour(color, transientChanges);
+    public void setTransientColor(@ColorInt int color) {
+        setTransientColour(color);
     }
 
     public void add(Trigger trigger) {
