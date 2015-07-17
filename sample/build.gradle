@@ -12,7 +12,6 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    }
     buildTypes {
         release {
             minifyEnabled false
@@ -34,7 +33,6 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.3'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2'
-//    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
 }
 
 apply from: '../config/static_analysis.gradle'
