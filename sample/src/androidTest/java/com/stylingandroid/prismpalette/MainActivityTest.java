@@ -35,6 +35,34 @@ public class MainActivityTest {
     }
 
     @Test
+    public void givenTheUserClicksTheFabThenTheColourOfTheTextIsGreen() {
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.text_view)).check(matches(withTextColour(Color.GREEN)));
+    }
+
+    @Test
+    public void givenTheUserClicksTheFabTwiceThenTheColourOfTheTextIsNotRed() {
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.text_view)).check(matches(not(withTextColour(Color.RED))));
+    }
+
+    @Test
+    public void givenTheUserClicksTheFabTwiceThenTheColourOfTheTextIsBlue() {
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.text_view)).check(matches(withTextColour(Color.BLUE)));
+    }
+
+    @Test
+    public void givenTheUserClicksTheFabThreeTimesThenTheColourOfTheTextIsRed() {
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.fab)).perform(click());
+        onView(withId(R.id.text_view)).check(matches(withTextColour(Color.RED)));
+    }
+
+    @Test
     public void givenADefaultLayoutThenTheColourOfTheTextIsRed() {
         onView(withId(R.id.text_view)).check(matches(withTextColour(Color.RED)));
     }
