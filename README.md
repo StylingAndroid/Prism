@@ -3,6 +3,9 @@
 
 ![Build Status](https://ci.stylingandroid.com/jenkins/buildStatus/icon?job=Prism "Build Status")
 
+If you are using Prism in you project, please [let us know](mailto:support@stylingandroid.com?subject=I%20use%20Prism) as we'd love to create a page
+showing the various projects where Prism is being used.
+
 To use the libraries below you will need to add the Styling Android repo:
 
     repositories {
