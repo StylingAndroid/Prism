@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements Setter {
                 .add(paletteTrigger)
                 .background(vibrant, paletteTrigger.getVibrantFilter(paletteTrigger.getColour()))
                 .background(vibrantLight, paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour()))
-                .background(vibrantDark, paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour()))
+                .background(vibrantDark, paletteTrigger.getDarkVibrantFilter(paletteTrigger.getColour()))
                 .background(muted, paletteTrigger.getMutedFilter(paletteTrigger.getColour()))
                 .background(mutedLight, paletteTrigger.getLightMutedFilter(paletteTrigger.getColour()))
                 .background(mutedDark, paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour()))
