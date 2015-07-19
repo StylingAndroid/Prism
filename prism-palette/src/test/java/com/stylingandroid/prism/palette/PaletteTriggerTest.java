@@ -49,42 +49,42 @@ public class PaletteTriggerTest {
 
     @Test
     public void givenADummyPaletteVibrantColourIsCorrect() {
-        Filter filter = paletteTrigger.getVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getVibrantFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteLightVibrantColourIsCorrect() {
-        Filter filter = paletteTrigger.getLightVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getLightVibrantFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteDarkVibrantColourIsCorrect() {
-        Filter filter = paletteTrigger.getDarkVibrantFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getDarkVibrantFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_VIBRANT);
     }
 
     @Test
     public void givenADummyPaletteMutedColourIsCorrect() {
-        Filter filter = paletteTrigger.getMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getMutedFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(MUTED);
     }
 
     @Test
     public void givenADummyPaletteLightMutedColourIsCorrect() {
-        Filter filter = paletteTrigger.getLightMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getLightMutedFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(LIGHT_MUTED);
     }
 
     @Test
     public void givenADummyPaletteDarkMutedColourIsCorrect() {
-        Filter filter = paletteTrigger.getDarkMutedFilter(paletteTrigger.getColour());
+        Filter filter = paletteTrigger.getDarkMutedFilter();
         int output = filter.filter(null);
         assertThat(output).isEqualTo(DARK_MUTED);
     }

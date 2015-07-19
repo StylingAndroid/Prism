@@ -23,24 +23,48 @@ public class PaletteTrigger extends BaseTrigger implements Trigger {
         new Palette.Builder(bitmap).generate(listener);
     }
 
+    public Filter getVibrantFilter() {
+        return getVibrantFilter(getColour());
+    }
+
     public Filter getVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
         return new CompoundFilter<>(new VibrantFilter(this), nextFilter);
+    }
+
+    public Filter getLightVibrantFilter() {
+        return getLightVibrantFilter(getColour());
     }
 
     public Filter getLightVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
         return new CompoundFilter<>(new LightVibrantFilter(this), nextFilter);
     }
 
+    public Filter getDarkVibrantFilter() {
+        return getDarkVibrantFilter(getColour());
+    }
+
     public Filter getDarkVibrantFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
         return new CompoundFilter<>(new DarkVibrantFilter(this), nextFilter);
+    }
+
+    public Filter getMutedFilter() {
+        return getMutedFilter(getColour());
     }
 
     public Filter getMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
         return new CompoundFilter<>(new MutedFilter(this), nextFilter);
     }
 
+    public Filter getLightMutedFilter() {
+        return getLightMutedFilter(getColour());
+    }
+
     public Filter getLightMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
         return new CompoundFilter<>(new LightMutedFilter(this), nextFilter);
+    }
+
+    public Filter getDarkMutedFilter() {
+        return getDarkMutedFilter(getColour());
     }
 
     public Filter getDarkMutedFilter(GenericFilter<Palette.Swatch, Integer> nextFilter) {
@@ -51,12 +75,24 @@ public class PaletteTrigger extends BaseTrigger implements Trigger {
         return rgbColour;
     }
 
+    public GenericFilter<Palette.Swatch, Integer> getColor() {
+        return rgbColour;
+    }
+
     public GenericFilter<Palette.Swatch, Integer> getTitleTextColour() {
         return titleTextColour;
     }
 
+    public GenericFilter<Palette.Swatch, Integer> getTitleTextColor() {
+        return getTitleTextColour();
+    }
+
     public GenericFilter<Palette.Swatch, Integer> getBodyTextColour() {
         return bodyTextColour;
+    }
+
+    public GenericFilter<Palette.Swatch, Integer> getBodyTextColor() {
+        return getBodyTextColour();
     }
 
     private Palette.PaletteAsyncListener listener = new Palette.PaletteAsyncListener() {
