@@ -6,14 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.graphics.Palette;
 
 import com.stylingandroid.prism.BaseTrigger;
-import com.stylingandroid.prism.Trigger;
 import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.CompoundFilter;
 import com.stylingandroid.prism.filter.GenericFilter;
 
 import java.lang.ref.WeakReference;
 
-public class PaletteTrigger extends BaseTrigger implements Trigger {
+public class PaletteTrigger extends BaseTrigger {
     private Palette palette;
 
     public PaletteTrigger() {
