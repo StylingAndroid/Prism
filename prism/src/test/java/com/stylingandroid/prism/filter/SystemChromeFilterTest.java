@@ -15,8 +15,8 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Color.class)
-public class StatusBarFilterTest {
-    private static final int ALPHA_MASK = 0x00FFFFFF;
+public class SystemChromeFilterTest {
+    private static final int HEX_102 = 0x66;
 
     @Before
     public void setup() {
@@ -24,11 +24,11 @@ public class StatusBarFilterTest {
     }
 
     @Test
-    public void givenASpecifiedColourOnlyTheAlphaChanges() {
+    public void givenASpecifiedColourThenCorrectColourIsProduced() {
         int inputColour = ColourUtils.rgb(ColourUtils.HEX_128, ColourUtils.HEX_128, ColourUtils.HEX_128);
-        StatusBarFilter statusBarFilter = new StatusBarFilter();
-        int expectedColour = inputColour & ALPHA_MASK;
-        int outputColour = statusBarFilter.filter(inputColour);
-        assertThat(outputColour & ALPHA_MASK).isEqualTo(expectedColour);
+        int expected = ColourUtils.rgb(HEX_102, HEX_102, HEX_102);
+        SystemChromeFilter systemChromeFilter = new SystemChromeFilter();
+        int outputColour = systemChromeFilter.filter(inputColour);
+        assertThat(outputColour).isEqualTo(expected);
     }
 }

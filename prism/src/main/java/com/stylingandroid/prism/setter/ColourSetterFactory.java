@@ -35,7 +35,7 @@ public final class ColourSetterFactory {
     }
 
     public static Setter getBackgroundSetter(Window window, Filter filter) {
-        return new StatusBarSetter(window, getNullSafeFilter(filter));
+        return new SystemChromeSetter(window, getNullSafeFilter(filter));
     }
 
     public static Setter getTextSetter(TextView view, Filter filter) {

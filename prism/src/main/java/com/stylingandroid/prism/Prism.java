@@ -7,7 +7,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.stylingandroid.prism.filter.Filter;
-import com.stylingandroid.prism.filter.StatusBarFilter;
+import com.stylingandroid.prism.filter.SystemChromeFilter;
 import com.stylingandroid.prism.setter.ColourSetterFactory;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class Prism implements Setter, ColorSetter {
     }
 
     public static final class Builder {
-        private static final Filter STATUS_BAR_COLOUR_FILTER = new StatusBarFilter();
+        private static final Filter STATUS_BAR_COLOUR_FILTER = new SystemChromeFilter();
         private final List<Setter> setters;
         private final List<Trigger> triggers;
 

@@ -7,21 +7,21 @@ import com.stylingandroid.prism.filter.Filter;
 import com.stylingandroid.prism.filter.IdentityFilter;
 
 public class StatusBarSetterAccessor extends BaseSetter {
-    private final StatusBarSetter statusBarColourSetter;
+    private final SystemChromeSetter systemChromeSetter;
 
     public static StatusBarSetterAccessor newInstance(Window window, int osVersion) {
         IdentityFilter identityFilter = new IdentityFilter();
-        StatusBarSetter setter = new StatusBarSetter(window, identityFilter, osVersion);
+        SystemChromeSetter setter = new SystemChromeSetter(window, identityFilter, osVersion);
         return new StatusBarSetterAccessor(setter, identityFilter);
     }
 
-    private StatusBarSetterAccessor(StatusBarSetter statusBarColourSetter, Filter filter) {
+    private StatusBarSetterAccessor(SystemChromeSetter systemChromeSetter, Filter filter) {
         super(filter);
-        this.statusBarColourSetter = statusBarColourSetter;
+        this.systemChromeSetter = systemChromeSetter;
     }
 
     @Override
     public void onSetColour(@ColorInt int colour) {
-        statusBarColourSetter.setColour(colour);
+        systemChromeSetter.setColour(colour);
     }
 }

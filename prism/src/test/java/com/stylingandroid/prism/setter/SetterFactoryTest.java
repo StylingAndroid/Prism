@@ -106,7 +106,7 @@ public class SetterFactoryTest {
     @Test
     public void givenAWindowRequestingABackgroundSetterThenAStatusBarSetterSetterIsReturned() {
         Setter setter = ColourSetterFactory.getBackgroundSetter(window, identity);
-        assertThat(setter).isInstanceOf(StatusBarSetter.class);
+        assertThat(setter).isInstanceOf(SystemChromeSetter.class);
     }
 
     private class CustomView extends View {
